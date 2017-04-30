@@ -30,6 +30,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.243"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/countdown_prompt" />
+
     <EditText
         android:id="@+id/countdownSeconds"
         android:layout_width="wrap_content"
