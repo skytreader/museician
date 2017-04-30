@@ -42,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/home_button_cta"
+        android:onClick="startJamming"
         tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="290dp" />
 
