@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context="net.skytreader.museician.HomeChooserActivity">
 
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="344dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,5 +52,5 @@
         android:onClick="startJamming"
         tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="290dp" />
-
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
