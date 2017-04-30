@@ -27,4 +27,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.243"/>
 
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="@string/countdown_prompt"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="176dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/home_button_cta"
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="290dp" />
+
 </android.support.constraint.ConstraintLayout>
