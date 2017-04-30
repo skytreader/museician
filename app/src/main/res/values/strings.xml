@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Museician</string>
+    <string name="greeting_initial_instructions">Hallelujah! Hallelujah!</string>
+    <string name="greeting_instructions">To begin, choose a song to jam with. You may also toggle with the other settings.</string>
 </resources>
