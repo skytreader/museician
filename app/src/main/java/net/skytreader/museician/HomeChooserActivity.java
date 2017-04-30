@@ -14,6 +14,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_chooser);
+        EditText countdownSecondsET = (EditText) findViewById(R.id.countdownSeconds);
+        countdownSecondsET.setText("4");
     }
 
     public void startJamming(View view){
