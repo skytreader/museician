@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint="@string/choose_file_cta"
+        android:onClick="chooseJamSong"
         />
 
     <Button

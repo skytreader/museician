@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+
 public class HomeChooserActivity extends AppCompatActivity {
 
     public static final String HOME_COUNTDOWN_SECONDS = "net.skytreader.museician.HomeChooserActivity.HOME_COUNTDOWN_SECONDS";
@@ -19,11 +21,14 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     public void startJamming(View view){
-        // TODO something
         Intent intent = new Intent(this, CountdownPlayActivity.class);
         EditText countdownSecondsET = (EditText) findViewById(R.id.countdownSeconds);
         int countdownSeconds = Integer.parseInt(countdownSecondsET.getText().toString());
         intent.putExtra(HomeChooserActivity.HOME_COUNTDOWN_SECONDS, countdownSeconds);
         startActivity(intent);
+    }
+
+    public void chooseJamSong(View view){
+        new MaterialFilePicker().withActivity(this).withRequestCode(1).withHiddenFiles(false).start();
     }
 }
