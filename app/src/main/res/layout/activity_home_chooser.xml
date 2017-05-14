@@ -6,7 +6,8 @@
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools"
         tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp"
+        android:padding="88dp">
 
     <TextView
         android:layout_width="wrap_content"
