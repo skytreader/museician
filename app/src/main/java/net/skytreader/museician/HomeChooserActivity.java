@@ -20,7 +20,7 @@ public class HomeChooserActivity extends AppCompatActivity {
         countdownSecondsET.setText("4");
     }
 
-    public void startJamming(View view){
+    public void startJamming(View view) {
         Intent intent = new Intent(this, CountdownPlayActivity.class);
         EditText countdownSecondsET = (EditText) findViewById(R.id.countdownSeconds);
         int countdownSeconds = Integer.parseInt(countdownSecondsET.getText().toString());
@@ -28,7 +28,7 @@ public class HomeChooserActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void chooseJamSong(View view){
-        new MaterialFilePicker().withActivity(this).withRequestCode(1).withHiddenFiles(false).start();
+    public void chooseJamSong(View view) {
+        new MaterialFilePicker().withActivity(this).withRequestCode(1).withHiddenFiles(false).withFilterDirectories(true).start();
     }
 }
