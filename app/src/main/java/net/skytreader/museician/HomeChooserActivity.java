@@ -88,7 +88,7 @@ public class HomeChooserActivity extends AppCompatActivity {
 
     public void startJamming(View view) {
         playFilePath = playFilePath.trim();
-        if (playFilePath != null && playFilePath.length() > 0) {
+        if (playFilePath == null || playFilePath.length() <= 0) {
             throw new RuntimeException("startJamming called while " +
                     "playFilePath is not properly set.");
         }
