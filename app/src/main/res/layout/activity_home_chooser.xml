@@ -39,6 +39,7 @@
         android:layout_gravity="center"
         android:hint="@string/choose_file_cta"
         android:onClick="chooseJamSong"
+        android:id="@+id/chooseAndJam"
         />
 
     <Button
@@ -47,6 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint="@string/home_button_cta"
-        android:onClick="startJamming" />
+        android:onClick="startJamming"
+        android:enabled="false"
+        />
 
 </LinearLayout>
