@@ -39,7 +39,7 @@
         android:layout_gravity="center"
         android:hint="@string/choose_file_cta"
         android:onClick="chooseJamSong"
-        android:id="@+id/chooseAndJam"
+        android:id="@+id/chooseJamSong"
         />
 
     <Button

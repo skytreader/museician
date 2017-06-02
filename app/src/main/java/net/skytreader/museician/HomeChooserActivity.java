@@ -54,13 +54,14 @@ public class HomeChooserActivity extends AppCompatActivity {
 
         if(requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
                 resultCode == RESULT_OK){
-            Button chooseAndJam = (Button) findViewById(R.id.chooseAndJam);
+            Button startJamming = (Button) findViewById(R.id.startJamming);
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String filename = extractFilename(filepath);
             String newHint = getApplicationContext().getResources().getString
                     (R.string.start_jam_cta);
-            chooseAndJam.setHint(newHint + " " + filename);
+            startJamming.setHint(newHint + " " + filename);
+            startJamming.setEnabled(true);
         }
     }
 
