@@ -7,10 +7,9 @@
     tools:context="net.skytreader.museician.CountdownPlayActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nowPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Now you are here!"
         tools:layout_editor_absoluteX="141dp"
         tools:layout_editor_absoluteY="67dp" />
 </android.support.constraint.ConstraintLayout>

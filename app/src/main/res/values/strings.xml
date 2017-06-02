@@ -8,4 +8,5 @@
     <string name="choose_file_cta">Choose jam song</string>
     <string name="file_permission_msg">Please grant file access to
         Museician. Functionality might be limited otherwise.</string>
+    <string name="jamming_msg">Now Playing:</string>
 </resources>

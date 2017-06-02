@@ -18,9 +18,11 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 public class HomeChooserActivity extends AppCompatActivity {
 
-    public static final String HOME_COUNTDOWN_SECONDS = "net.skytreader" +
-            ".museician.HomeChooserActivity.HOME_COUNTDOWN_SECONDS";
+    public static final String HOME_COUNTDOWN_SECONDS = "HOME_COUNTDOWN_SECONDS";
+    public static final String HOME_PLAY_FILEPATH = "HOME_PLAY_FILEPATH";
     public static final int FILE_READ_REQUEST_CODE = 0;
+
+    private String playFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +39,28 @@ public class HomeChooserActivity extends AppCompatActivity {
 
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest
-                        .permission.READ_EXTERNAL_STORAGE},
+                                .permission.READ_EXTERNAL_STORAGE},
                         HomeChooserActivity.FILE_READ_REQUEST_CODE);
             }
         }
     }
 
-    private String extractFilename(String filepath){
+    private String extractFilename(String filepath) {
         String[] parse = filepath.split("/");
         return parse[parse.length - 1];
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
-                resultCode == RESULT_OK){
+        if (requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
+                resultCode == RESULT_OK) {
             Button startJamming = (Button) findViewById(R.id.startJamming);
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String filename = extractFilename(filepath);
+            playFilePath = filename;
             String newHint = getApplicationContext().getResources().getString
                     (R.string.start_jam_cta);
             startJamming.setHint(newHint + " " + filename);
@@ -75,7 +78,8 @@ public class HomeChooserActivity extends AppCompatActivity {
                     Context c = getApplicationContext();
                     String filePermissionsMsg = c.getResources().getString(R
                             .string.file_permission_msg);
-                    Toast t = Toast.makeText(c, filePermissionsMsg, Toast.LENGTH_SHORT);
+                    Toast t = Toast.makeText(c, filePermissionsMsg, Toast
+                            .LENGTH_SHORT);
                     t.show();
                 }
             }
@@ -83,6 +87,11 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     public void startJamming(View view) {
+        playFilePath = playFilePath.trim();
+        if (playFilePath != null && playFilePath.length() > 0) {
+            throw new RuntimeException("startJamming called while " +
+                    "playFilePath is not properly set.");
+        }
         Intent intent = new Intent(this, CountdownPlayActivity.class);
         EditText countdownSecondsET = (EditText) findViewById(R.id
                 .countdownSeconds);
@@ -90,6 +99,7 @@ public class HomeChooserActivity extends AppCompatActivity {
                 .toString());
         intent.putExtra(HomeChooserActivity.HOME_COUNTDOWN_SECONDS,
                 countdownSeconds);
+        intent.putExtra(HOME_PLAY_FILEPATH, playFilePath);
         startActivity(intent);
     }
 
