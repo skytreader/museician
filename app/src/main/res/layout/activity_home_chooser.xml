@@ -42,4 +42,14 @@
         android:id="@+id/chooseAndJam"
         />
 
+    <Button
+        android:id="@+id/startJamming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:hint="@string/pending_jam"
+        android:onClick="startJamming"
+        android:enabled="false"
+        />
+
 </LinearLayout>
