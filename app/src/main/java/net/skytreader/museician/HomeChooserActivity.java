@@ -43,6 +43,11 @@ public class HomeChooserActivity extends AppCompatActivity {
         }
     }
 
+    private String extractFilename(String filepath){
+        String[] parse = filepath.split("/");
+        return parse[parse.length - 1];
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -50,11 +55,12 @@ public class HomeChooserActivity extends AppCompatActivity {
         if(requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
                 resultCode == RESULT_OK){
             Button chooseAndJam = (Button) findViewById(R.id.chooseAndJam);
-            String filename = data.getStringExtra(FilePickerActivity
+            String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
+            String filename = extractFilename(filepath);
             String newHint = getApplicationContext().getResources().getString
                     (R.string.start_jam_cta);
-            chooseAndJam.setHint(newHint + filename);
+            chooseAndJam.setHint(newHint + " " + filename);
         }
     }
 
