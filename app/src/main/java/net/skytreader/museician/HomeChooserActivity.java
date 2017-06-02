@@ -46,6 +46,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getApplicationContext(), "onActivityResult", Toast
+                .LENGTH_SHORT);
 
         if(requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
                 resultCode == RESULT_OK){
@@ -85,7 +87,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     public void chooseJamSong(View view) {
-        new MaterialFilePicker().withActivity(this).withRequestCode(1)
+        new MaterialFilePicker().withActivity(this).withRequestCode
+                (HomeChooserActivity.FILE_READ_REQUEST_CODE)
                 .withHiddenFiles(false).withFilterDirectories(true).start();
     }
 }
