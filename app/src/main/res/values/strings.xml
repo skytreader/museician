@@ -3,6 +3,8 @@
     <string name="greeting_initial_instructions">Hallelujah! Hallelujah!</string>
     <string name="greeting_instructions">To begin, choose a song to jam with. You may also toggle with the other settings.</string>
     <string name="countdown_prompt">Countdown (seconds)</string>
-    <string name="home_button_cta">JAM!</string>
+    <string name="start_jam_cta">Jam to: </string>
     <string name="choose_file_cta">Choose jam song</string>
+    <string name="file_permission_msg">Please grant file access to
+        Museician. Functionality might be limited otherwise.</string>
 </resources>

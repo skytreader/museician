@@ -46,15 +46,15 @@ public class HomeChooserActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getApplicationContext(), "onActivityResult", Toast
-                .LENGTH_SHORT);
 
         if(requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
                 resultCode == RESULT_OK){
             Button chooseAndJam = (Button) findViewById(R.id.chooseAndJam);
             String filename = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
-            chooseAndJam.setHint("Jam to: " + filename);
+            String newHint = getApplicationContext().getResources().getString
+                    (R.string.start_jam_cta);
+            chooseAndJam.setHint(newHint + filename);
         }
     }
 
@@ -66,9 +66,9 @@ public class HomeChooserActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] !=
                         PackageManager.PERMISSION_GRANTED) {
                     Context c = getApplicationContext();
-                    Toast t = Toast.makeText(c, "Please grant file access to " +
-                            "Museician. Functionality might be limited " +
-                            "otherwise.", Toast.LENGTH_SHORT);
+                    String filePermissionsMsg = c.getResources().getString(R
+                            .string.file_permission_msg);
+                    Toast t = Toast.makeText(c, filePermissionsMsg, Toast.LENGTH_SHORT);
                     t.show();
                 }
             }
