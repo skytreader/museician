@@ -27,6 +27,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     public static final String HOME_PLAY_FILEPATH = "HOME_PLAY_FILEPATH";
     public static final int FILE_READ_REQUEST_CODE = 0;
 
+    private final int RECENCY_LIMIT = 4;
+
     private String playFilePath;
 
     private String lastDirectory;
@@ -67,7 +69,7 @@ public class HomeChooserActivity extends AppCompatActivity {
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
         lastDirectory = kvstore.getString(getString(R.string
                 .kv_last_directory), null);
-        mostRecentFiles = constructMostRecentFilenames(kvstore, 4);
+        mostRecentFiles = constructMostRecentFilenames(kvstore, RECENCY_LIMIT);
     }
 
     private String[] constructMostRecentFilenames(SharedPreferences kvstore,
@@ -85,10 +87,16 @@ public class HomeChooserActivity extends AppCompatActivity {
         return filepathComponents[filepathComponents.length - 1];
     }
 
-    private String extractFilepath(String[] filepathComponents){
+    private String extractFilepath(String[] filepathComponents) {
         return TextUtils.join("/",
                 Arrays.copyOf(filepathComponents, filepathComponents.length -
                         1));
+    }
+
+    private void saveLastDirectory(String lastDirectory) {
+        SharedPreferences.Editor kvEditor = kvstore.edit();
+        kvEditor.putString(getString(R.string.kv_last_directory),
+                lastDirectory);
     }
 
     @Override
@@ -102,7 +110,12 @@ public class HomeChooserActivity extends AppCompatActivity {
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
             String filename = extractFilename(filepathComponents);
-            playFilePath = filename;
+            playFilePath = filepath;
+            lastDirectory = extractFilepath(filepathComponents);
+
+            // Set to
+            saveLastDirectory(lastDirectory);
+
             String newHint = getApplicationContext().getResources().getString
                     (R.string.start_jam_cta);
             startJamming.setHint(newHint + " " + filename);
