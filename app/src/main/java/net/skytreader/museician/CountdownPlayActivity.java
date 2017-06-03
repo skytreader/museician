@@ -10,6 +10,10 @@ public class CountdownPlayActivity extends AppCompatActivity {
 
     private CountdownPlayer countdownPlayer;
 
+    private TextView statusUpdateElement;
+    private int countTime;
+    private long intervalMillis;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,16 +26,29 @@ public class CountdownPlayActivity extends AppCompatActivity {
                 .string.jamming_msg);
         nowPlaying.setText(playText + " " + playFilePath);
 
-        int countdownSeconds = i.getIntExtra(HomeChooserActivity
+        countTime = i.getIntExtra(HomeChooserActivity
                 .HOME_COUNTDOWN_SECONDS, 4);
-        TextView statusScreen = (TextView) findViewById(R.id.statusScreen);
-        countdownPlayer = new CountdownPlayer(this, statusScreen,
-                countdownSeconds, 1000L);
+        statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
+        intervalMillis = 1000L;
+        // countdownPlayer = new CountdownPlayer(this, statusScreen,
+        //        countdownSeconds, 1000L);
+        beginCountdown();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        countdownPlayer.execute(null, null);
+    private void beginCountdown(){
+        runOnUiThread(new Runnable(){
+            public void run(){
+                try {
+                    while (countTime >= 0) {
+                        statusUpdateElement.setText(Integer.toString(countTime));
+                        countTime--;
+                        Thread.sleep(intervalMillis);
+                    }
+                } catch(InterruptedException ie){
+                    Log.e("countdown", "InterruptedException occurred", ie);
+                }
+            }
+        });
+
     }
 }
