@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,7 +69,7 @@ public class HomeChooserActivity extends AppCompatActivity {
         kvstore = appContext.getSharedPreferences(getString
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
         lastDirectory = kvstore.getString(getString(R.string
-                .kv_last_directory), null);
+                .kv_last_directory), "/");
         mostRecentFiles = constructMostRecentFilenames(kvstore, RECENCY_LIMIT);
     }
 
@@ -95,8 +96,10 @@ public class HomeChooserActivity extends AppCompatActivity {
 
     private void saveLastDirectory(String lastDirectory) {
         SharedPreferences.Editor kvEditor = kvstore.edit();
+        this.lastDirectory = lastDirectory;
         kvEditor.putString(getString(R.string.kv_last_directory),
                 lastDirectory);
+        kvEditor.commit();
     }
 
     @Override
@@ -161,6 +164,7 @@ public class HomeChooserActivity extends AppCompatActivity {
     public void chooseJamSong(View view) {
         new MaterialFilePicker().withActivity(this).withRequestCode
                 (HomeChooserActivity.FILE_READ_REQUEST_CODE)
-                .withHiddenFiles(false).withFilterDirectories(true).start();
+                .withHiddenFiles(false).withFilterDirectories(true).withPath
+                (lastDirectory).start();
     }
 }
