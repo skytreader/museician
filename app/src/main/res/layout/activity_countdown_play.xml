@@ -9,10 +9,13 @@
     <TextView
         android:id="@+id/statusScreen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="28dp"/>
 
     <TextView
         android:id="@+id/nowPlaying"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/statusScreen"/>
 </RelativeLayout>
