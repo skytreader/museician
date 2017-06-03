@@ -3,11 +3,13 @@ package net.skytreader.museician;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,21 +18,35 @@ import android.widget.Toast;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
+import java.util.Arrays;
+
 public class HomeChooserActivity extends AppCompatActivity {
 
-    public static final String HOME_COUNTDOWN_SECONDS = "HOME_COUNTDOWN_SECONDS";
+    public static final String HOME_COUNTDOWN_SECONDS =
+            "HOME_COUNTDOWN_SECONDS";
     public static final String HOME_PLAY_FILEPATH = "HOME_PLAY_FILEPATH";
     public static final int FILE_READ_REQUEST_CODE = 0;
 
     private String playFilePath;
 
+    private String lastDirectory;
+    private String[] mostRecentFiles;
+
+    private SharedPreferences kvstore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_chooser);
+
+        Context appContext = getApplicationContext();
+
         EditText countdownSecondsET = (EditText) findViewById(R.id
                 .countdownSeconds);
-        countdownSecondsET.setText("4");
+        countdownSecondsET.setText(appContext.getResources()
+                .getString(R.string.countdown_default));
+
+        // Check (and get) the permission for reading external storage.
         int permissionStatus = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionStatus == PackageManager.PERMISSION_DENIED) {
@@ -43,11 +59,36 @@ public class HomeChooserActivity extends AppCompatActivity {
                         HomeChooserActivity.FILE_READ_REQUEST_CODE);
             }
         }
+
+        // Check (and get) related data from SharedPreferences KV-Store.
+        // NOTE: Android tutorial uses the Context from getActivity. I wonder
+        // how this is different.
+        kvstore = appContext.getSharedPreferences(getString
+                (R.string.shared_preferences_key), Context.MODE_PRIVATE);
+        lastDirectory = kvstore.getString(getString(R.string
+                .kv_last_directory), null);
+        mostRecentFiles = constructMostRecentFilenames(kvstore, 4);
     }
 
-    private String extractFilename(String filepath) {
-        String[] parse = filepath.split("/");
-        return parse[parse.length - 1];
+    private String[] constructMostRecentFilenames(SharedPreferences kvstore,
+                                                  int recencyCount) {
+        String[] recentFilenames = new String[recencyCount];
+
+        for (int i = 0; i < recencyCount; i++) {
+            recentFilenames[i] = kvstore.getString(getString(R.string
+                    .kv_recent_files) + Integer.toString(i + 1), null);
+        }
+        return recentFilenames;
+    }
+
+    private String extractFilename(String[] filepathComponents) {
+        return filepathComponents[filepathComponents.length - 1];
+    }
+
+    private String extractFilepath(String[] filepathComponents){
+        return TextUtils.join("/",
+                Arrays.copyOf(filepathComponents, filepathComponents.length -
+                        1));
     }
 
     @Override
@@ -59,7 +100,8 @@ public class HomeChooserActivity extends AppCompatActivity {
             Button startJamming = (Button) findViewById(R.id.startJamming);
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
-            String filename = extractFilename(filepath);
+            String[] filepathComponents = filepath.split("/");
+            String filename = extractFilename(filepathComponents);
             playFilePath = filename;
             String newHint = getApplicationContext().getResources().getString
                     (R.string.start_jam_cta);
