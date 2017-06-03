@@ -18,5 +18,10 @@ public class CountdownPlayActivity extends AppCompatActivity {
         String playText = getApplicationContext().getResources().getString(R
                 .string.jamming_msg);
         nowPlaying.setText(playText + " " + playFilePath);
+
+        int countdownSeconds = i.getIntExtra(HomeChooserActivity
+                .HOME_COUNTDOWN_SECONDS, 4);
+        TextView statusScreen = (TextView) findViewById(R.id.statusScreen);
+        statusScreen.setText(Integer.toString(countdownSeconds));
     }
 }
