@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 public class CountdownPlayActivity extends AppCompatActivity {
 
+    private CountdownPlayer countdownPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,21 +25,13 @@ public class CountdownPlayActivity extends AppCompatActivity {
         int countdownSeconds = i.getIntExtra(HomeChooserActivity
                 .HOME_COUNTDOWN_SECONDS, 4);
         TextView statusScreen = (TextView) findViewById(R.id.statusScreen);
-        countdown(statusScreen, countdownSeconds, 1);
+        countdownPlayer = new CountdownPlayer(this, statusScreen,
+                countdownSeconds, 1000L);
     }
 
-    private void countdown(TextView countDisplay, int countTime, int
-            intervalSec){
-        long intervalMillis = intervalSec * 1000;
-        try {
-            while (countTime > 0) {
-                countDisplay.setText(Integer.toString(countTime));
-                countTime--;
-                Thread.sleep(intervalMillis);
-            }
-        } catch(InterruptedException ie){
-            Log.e("countdown", "InterruptedException occurred", ie);
-        }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        countdownPlayer.execute(null, null);
     }
 }
