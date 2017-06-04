@@ -30,25 +30,30 @@ public class CountdownPlayActivity extends AppCompatActivity {
                 .HOME_COUNTDOWN_SECONDS, 4);
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
-        // countdownPlayer = new CountdownPlayer(this, statusScreen,
-        //        countdownSeconds, 1000L);
         beginCountdown();
     }
 
-    private void beginCountdown(){
-        runOnUiThread(new Runnable(){
-            public void run(){
-                try {
-                    while (countTime >= 0) {
-                        statusUpdateElement.setText(Integer.toString(countTime));
-                        countTime--;
+    private void beginCountdown() {
+        Runnable r = new Runnable() {
+            public void run() {
+                while (countTime >= 0) {
+                    runOnUiThread(new Runnable() {
+                                      public void run() {
+                                          statusUpdateElement.setText
+                                                  (Integer.toString(countTime));
+                                          countTime--;
+                                      }
+                                  }
+                    );
+                    try {
                         Thread.sleep(intervalMillis);
+                    } catch (InterruptedException ie) {
+                        Log.e("beginCountdown", "InterruptedException " +
+                                "occurred", ie);
                     }
-                } catch(InterruptedException ie){
-                    Log.e("countdown", "InterruptedException occurred", ie);
                 }
             }
-        });
-
+        };
+        new Thread(r).start();
     }
 }
