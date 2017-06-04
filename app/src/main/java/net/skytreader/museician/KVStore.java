@@ -19,5 +19,15 @@ public class KVStore {
 
     public KVStore(Context appContext, String namespace){
         sp = appContext.getSharedPreferences(namespace, Context.MODE_PRIVATE);
+        spEditor = sp.edit();
+    }
+
+    public String get(String key, String dflt){
+        return sp.getString(key, dflt);
+    }
+
+    public void set(String key, String newVal){
+        spEditor.putString(key, newVal);
+        spEditor.commit();
     }
 }

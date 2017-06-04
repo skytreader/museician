@@ -10,13 +10,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.util.Arrays;
@@ -34,7 +32,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     private String lastDirectory;
     private String[] mostRecentFiles;
 
-    private SharedPreferences kvstore;
+    private SharedPreferences _kvstore;
+    private KVStore kvstore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +64,14 @@ public class HomeChooserActivity extends AppCompatActivity {
         // Check (and get) related data from SharedPreferences KV-Store.
         // NOTE: Android tutorial uses the Context from getActivity. I wonder
         // how this is different.
-        kvstore = appContext.getSharedPreferences(getString
+        _kvstore = appContext.getSharedPreferences(getString
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
+        kvstore = new KVStore(this, getString(R.string.shared_preferences_key));
         // TODO: Maybe we can just getString whenever we need lastDirectory?
         // TODO do away with the field variable.
-        lastDirectory = kvstore.getString(getString(R.string
-                .kv_last_directory), "/");
+        lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
         // TODO: actually use this
-        mostRecentFiles = constructMostRecentFilenames(kvstore, RECENCY_LIMIT);
+        mostRecentFiles = constructMostRecentFilenames(_kvstore, RECENCY_LIMIT);
     }
 
     private String[] constructMostRecentFilenames(SharedPreferences kvstore,
@@ -97,11 +96,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     private void saveLastDirectory(String lastDirectory) {
-        SharedPreferences.Editor kvEditor = kvstore.edit();
         this.lastDirectory = lastDirectory;
-        kvEditor.putString(getString(R.string.kv_last_directory),
-                lastDirectory);
-        kvEditor.commit();
+        kvstore.set(getString(R.string.kv_last_directory), lastDirectory);
     }
 
     @Override
