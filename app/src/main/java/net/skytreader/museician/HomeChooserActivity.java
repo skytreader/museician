@@ -26,7 +26,6 @@ public class HomeChooserActivity extends AppCompatActivity {
     public static final String HOME_COUNTDOWN_SECONDS =
             "HOME_COUNTDOWN_SECONDS";
     public static final String HOME_PLAY_FILEPATH = "HOME_PLAY_FILEPATH";
-    public static final int FILE_READ_REQUEST_CODE = 0;
 
     private final int RECENCY_LIMIT = 4;
 
@@ -59,7 +58,7 @@ public class HomeChooserActivity extends AppCompatActivity {
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest
                                 .permission.READ_EXTERNAL_STORAGE},
-                        HomeChooserActivity.FILE_READ_REQUEST_CODE);
+                        PermissionsRequest.FILE_READ);
             }
         }
 
@@ -109,7 +108,7 @@ public class HomeChooserActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == HomeChooserActivity.FILE_READ_REQUEST_CODE &&
+        if (requestCode == PermissionsRequest.FILE_READ &&
                 resultCode == RESULT_OK) {
             Button startJamming = (Button) findViewById(R.id.startJamming);
             String filepath = data.getStringExtra(FilePickerActivity
@@ -133,7 +132,7 @@ public class HomeChooserActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[]
             permissions, int[] grantResults) {
         switch (requestCode) {
-            case HomeChooserActivity.FILE_READ_REQUEST_CODE: {
+            case PermissionsRequest.FILE_READ: {
                 if (grantResults.length > 0 && grantResults[0] !=
                         PackageManager.PERMISSION_GRANTED) {
                     Context c = getApplicationContext();
@@ -166,7 +165,7 @@ public class HomeChooserActivity extends AppCompatActivity {
 
     public void chooseJamSong(View view) {
         new MaterialFilePicker().withActivity(this).withRequestCode
-                (HomeChooserActivity.FILE_READ_REQUEST_CODE)
+                (PermissionsRequest.FILE_READ)
                 .withHiddenFiles(false).withFilterDirectories(true).withPath
                 (lastDirectory).start();
     }
