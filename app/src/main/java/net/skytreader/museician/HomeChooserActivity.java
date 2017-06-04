@@ -164,9 +164,6 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     public void chooseJamSong(View view) {
-        new MaterialFilePicker().withActivity(this).withRequestCode
-                (PermissionsRequest.FILE_READ)
-                .withHiddenFiles(false).withFilterDirectories(true).withPath
-                (lastDirectory).start();
+        Utils.createMaterialFilePicker(this, lastDirectory).start();
     }
 }
