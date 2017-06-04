@@ -30,6 +30,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
                 .HOME_COUNTDOWN_SECONDS, 4);
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
+        countdownPlayer = new CountdownPlayer(this, playFilePath);
         beginCountdown();
     }
 
@@ -52,6 +53,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
                                 "occurred", ie);
                     }
                 }
+                countdownPlayer.execute(null, null);
             }
         };
         new Thread(r).start();
