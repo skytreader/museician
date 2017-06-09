@@ -21,6 +21,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
         Intent i = getIntent();
         String playFilePath = i.getStringExtra(HomeChooserActivity
                 .HOME_PLAY_FILEPATH);
+        playFilePath = Utils.extractFilename(playFilePath.split("/"));
         TextView nowPlaying = (TextView) findViewById(R.id.nowPlaying);
         String playText = getApplicationContext().getResources().getString(R
                 .string.jamming_msg);

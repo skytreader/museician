@@ -28,4 +28,8 @@ public class Utils {
                         (lastDirectory);
     }
 
+    public static String extractFilename(String[] filepathComponents) {
+        return filepathComponents[filepathComponents.length - 1];
+    }
+
 }

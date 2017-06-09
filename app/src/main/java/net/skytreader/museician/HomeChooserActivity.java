@@ -85,9 +85,6 @@ public class HomeChooserActivity extends AppCompatActivity {
         return recentFilenames;
     }
 
-    private String extractFilename(String[] filepathComponents) {
-        return filepathComponents[filepathComponents.length - 1];
-    }
 
     private String extractFilepath(String[] filepathComponents) {
         return TextUtils.join("/",
@@ -110,7 +107,7 @@ public class HomeChooserActivity extends AppCompatActivity {
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
-            String filename = extractFilename(filepathComponents);
+            String filename = Utils.extractFilename(filepathComponents);
             playFilePath = filepath;
             lastDirectory = extractFilepath(filepathComponents);
 
