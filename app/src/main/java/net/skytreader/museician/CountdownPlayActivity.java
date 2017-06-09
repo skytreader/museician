@@ -21,11 +21,11 @@ public class CountdownPlayActivity extends AppCompatActivity {
         Intent i = getIntent();
         String playFilePath = i.getStringExtra(HomeChooserActivity
                 .HOME_PLAY_FILEPATH);
-        playFilePath = Utils.extractFilename(playFilePath.split("/"));
+        String playFileDisplay = Utils.extractFilename(playFilePath.split("/"));
         TextView nowPlaying = (TextView) findViewById(R.id.nowPlaying);
         String playText = getApplicationContext().getResources().getString(R
                 .string.jamming_msg);
-        nowPlaying.setText(playText + " " + playFilePath);
+        nowPlaying.setText(playText + " " + playFileDisplay);
 
         countTime = i.getIntExtra(HomeChooserActivity
                 .HOME_COUNTDOWN_SECONDS, 4);
