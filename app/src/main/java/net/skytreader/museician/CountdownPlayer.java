@@ -23,7 +23,6 @@ public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params){
         MediaPlayer mp = MediaPlayer.create(activity, Uri.parse(filepath));
-        Log.i("doInBackground", "MediaPlayer created? " + mp);
         mp.setLooping(false);
         mp.setVolume(100F, 100F);
         mp.start();
