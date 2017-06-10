@@ -1,6 +1,8 @@
 package net.skytreader.museician;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +38,8 @@ public class CountdownPlayActivity extends AppCompatActivity {
     }
 
     private void beginCountdown() {
+        final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,
+                100);
         Runnable r = new Runnable() {
             public void run() {
                 while (countTime >= 0) {
@@ -43,6 +47,8 @@ public class CountdownPlayActivity extends AppCompatActivity {
                                       public void run() {
                                           statusUpdateElement.setText
                                                   (Integer.toString(countTime));
+                                          tg.startTone(ToneGenerator
+                                                  .TONE_DTMF_1, 1000);
                                           countTime--;
                                       }
                                   }
