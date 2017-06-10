@@ -48,7 +48,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
                                           statusUpdateElement.setText
                                                   (Integer.toString(countTime));
                                           tg.startTone(ToneGenerator
-                                                  .TONE_DTMF_1, 1000);
+                                                  .TONE_PROP_BEEP, 1000);
                                           countTime--;
                                       }
                                   }
