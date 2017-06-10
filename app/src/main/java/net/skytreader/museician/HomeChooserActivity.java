@@ -66,7 +66,7 @@ public class HomeChooserActivity extends AppCompatActivity {
         // how this is different.
         _kvstore = appContext.getSharedPreferences(getString
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
-        kvstore = new KVStore(this, getString(R.string.shared_preferences_key));
+        kvstore = new KVStore(_kvstore);
         // TODO: Maybe we can just getString whenever we need lastDirectory?
         // TODO do away with the field variable.
         lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");

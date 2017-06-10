@@ -17,8 +17,8 @@ public class KVStore {
     private SharedPreferences sp;
     private SharedPreferences.Editor spEditor;
 
-    public KVStore(Context appContext, String namespace){
-        sp = appContext.getSharedPreferences(namespace, Context.MODE_PRIVATE);
+    public KVStore(SharedPreferences sp){
+        this.sp = sp;
         spEditor = sp.edit();
     }
 
