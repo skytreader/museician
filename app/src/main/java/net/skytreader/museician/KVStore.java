@@ -1,6 +1,5 @@
 package net.skytreader.museician;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
