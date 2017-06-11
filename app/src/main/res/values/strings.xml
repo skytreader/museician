@@ -13,8 +13,6 @@
 
     <string name="shared_preferences_key">net.skytreader.museician
         .KVSTORE_KEY</string>
-    <string name="kv_last_directory">net.skytreader.museician.kvstore
-        .LAST_DIRECTORY</string>
-    <string name="kv_recent_files">net.skytreader.museician.kvstore
-        .RECENT_FILES</string>
+    <string name="kv_last_directory">K_LAST_DIRECTORY</string>
+    <string name="kv_recent_files">K_RECENT_FILES</string>
 </resources>
