@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -17,10 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class KVStoreTest {
 
-    @Mock
     private SharedPreferences mockSp;
-
-    @Mock
     private SharedPreferences.Editor mockSpEditor;
 
     private final String NONEXISTENT_KEY = "NONEXISTENT_KEY";
