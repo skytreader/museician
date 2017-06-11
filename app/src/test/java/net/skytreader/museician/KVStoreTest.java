@@ -20,6 +20,9 @@ public class KVStoreTest {
     @Mock
     private SharedPreferences mockSp;
 
+    @Mock
+    private SharedPreferences.Editor mockSpEditor;
+
     private final String NONEXISTENT_KEY = "NONEXISTENT_KEY";
 
     @Test
@@ -35,8 +38,13 @@ public class KVStoreTest {
     }
 
     private KVStore createMockedKVStore(){
-        when(mockSp.getString(NONEXISTENT_KEY, null)).thenReturn("not " +
-                "anymore!");
+        //when(mockSp.getString(NONEXISTENT_KEY, null)).thenReturn("not " +
+        //        "anymore!");
+        mockSp = mock(SharedPreferences.class);
+        mockSpEditor = mock(SharedPreferences.Editor.class);
+        when(mockSpEditor.commit()).thenReturn(true);
+        when(mockSp.edit()).thenReturn(mockSpEditor);
+        //when(mockSp.getString(NONEXISTENT_KEY, null)).thenCallRealMethod();
         return new KVStore(mockSp);
     }
 
