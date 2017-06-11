@@ -2,7 +2,6 @@ package net.skytreader.museician;
 
 import android.content.SharedPreferences;
 
-import java.util.Deque;
 import java.util.LinkedList;
 
 /**
@@ -22,38 +21,50 @@ import java.util.LinkedList;
 
 public class LRUPriorityQueue {
 
-    private SharedPreferences spStorage;
-    private SharedPreferences.Editor spStorageEditor;
+    private KVStore kvStore;
     private String keyNamespace;
-    private Deque<String> representation;
+    private LinkedList<String> representation;
+    private int lenLimit;
 
     public LRUPriorityQueue(SharedPreferences sp, int queueLen, String
             namespace){
-        spStorage = sp;
-        spStorageEditor = sp.edit();
-        representation = new LinkedList<String>();
+        kvStore = new KVStore(sp);
+        representation = new LinkedList<>();
         keyNamespace = namespace;
+        lenLimit = queueLen;
         initialize();
+    }
+
+    private String buildKeyForm(int index){
+        return keyNamespace + "_" + Integer.toString(index);
     }
 
     public void initialize(){
         int i = 0;
-        String elementI = spStorage.getString(keyNamespace + "_" + Integer
-                .toString(i), null);
+        String elementI = kvStore.get(buildKeyForm(i), null);
 
         while(elementI != null){
             representation.addLast(elementI);
             i++;
-            elementI = spStorage.getString(keyNamespace + "_" + Integer
-                    .toString(i), null);
+            elementI = kvStore.get(buildKeyForm(i), null);
         }
     }
 
-    public int getSize(){
-        return representation.length;
+    public int size(){
+        return representation.size();
     }
 
     public void enqueue(String val){
+        int nextIndex = representation.size();
 
+        if(nextIndex == lenLimit){
+            representation.removeLast();
+        }
+        representation.addFirst(val);
+        int limit = representation.size();
+
+        for(int i = 0; i < limit; i++){
+            kvStore.set(buildKeyForm(i), representation.get(i));
+        }
     }
 }
