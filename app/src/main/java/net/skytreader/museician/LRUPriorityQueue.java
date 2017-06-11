@@ -2,6 +2,9 @@ package net.skytreader.museician;
 
 import android.content.SharedPreferences;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * Implements a priority queue that evicts members based on recency of access.
  * The underlying storage for the queue items is a namespaced SharedPreferences
@@ -22,13 +25,13 @@ public class LRUPriorityQueue {
     private SharedPreferences spStorage;
     private SharedPreferences.Editor spStorageEditor;
     private String keyNamespace;
-    private String[] representation;
+    private Deque<String> representation;
 
     public LRUPriorityQueue(SharedPreferences sp, int queueLen, String
             namespace){
         spStorage = sp;
         spStorageEditor = sp.edit();
-        representation = new String[queueLen];
+        representation = new LinkedList<String>();
         keyNamespace = namespace;
     }
 
