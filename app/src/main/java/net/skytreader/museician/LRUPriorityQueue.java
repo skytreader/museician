@@ -33,6 +33,20 @@ public class LRUPriorityQueue {
         spStorageEditor = sp.edit();
         representation = new LinkedList<String>();
         keyNamespace = namespace;
+        initialize();
+    }
+
+    public void initialize(){
+        int i = 0;
+        String elementI = spStorage.getString(keyNamespace + "_" + Integer
+                .toString(i), null);
+
+        while(elementI != null){
+            representation.addLast(elementI);
+            i++;
+            elementI = spStorage.getString(keyNamespace + "_" + Integer
+                    .toString(i), null);
+        }
     }
 
     public int getSize(){
