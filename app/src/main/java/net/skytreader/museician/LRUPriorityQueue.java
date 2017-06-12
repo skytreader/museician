@@ -35,7 +35,13 @@ public class LRUPriorityQueue {
         initialize();
     }
 
-    private String buildKeyForm(int index){
+    /**
+     * This is protected so that unit tests may use it.
+     *
+     * @param index
+     * @return
+     */
+    protected String buildKeyForm(int index){
         return keyNamespace + "_" + Integer.toString(index);
     }
 
