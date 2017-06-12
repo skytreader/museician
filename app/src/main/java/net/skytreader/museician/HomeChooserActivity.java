@@ -66,8 +66,8 @@ public class HomeChooserActivity extends AppCompatActivity {
         lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
         mostRecentFiles = recentFiles.getContents();
         Log.i("recentFiles", Arrays.toString(mostRecentFiles));
-        ArrayAdapter<String> adapter = new ArrayAdapter(appContext, R
-                .layout.activity_home_chooser, mostRecentFiles);
+        ArrayAdapter<String> adapter = new ArrayAdapter(appContext, android.R
+                .layout.simple_list_item_1, mostRecentFiles);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
         recentFiles.setAdapter(adapter);
     }
