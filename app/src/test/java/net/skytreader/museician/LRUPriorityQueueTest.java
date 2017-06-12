@@ -6,6 +6,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -29,15 +34,31 @@ public class LRUPriorityQueueTest {
             "UMF"
     };
 
-    private void initMockedSharedPreferences(){
+    private void initMockedSharedPreferences() {
         mSharedPref = mock(SharedPreferences.class);
         mSharedPrefEditor = mock(SharedPreferences.Editor.class);
         when(mSharedPref.edit()).thenReturn(mSharedPrefEditor);
         when(mSharedPrefEditor.commit()).thenReturn(true);
     }
 
+    /**
+     * This method assumes that you are inserting the elements of
+     * RIGGED_QUEUE from index 0 onwards which would result to a queue where
+     * the least-recently used is index 0. This will only build the first
+     * full instance of the queue, and will not take into account any evictions.
+     *
+     * @param queueLen
+     * @return
+     */
+    private String[] buildQueueRepr(int queueLen) {
+        LinkedList<String> riggedQueueSlice = (LinkedList<String>) Arrays.asList(Arrays.copyOf
+                (RIGGED_QUEUE, queueLen));
+        Collections.reverse(riggedQueueSlice);
+        return (String[]) riggedQueueSlice.toArray();
+    }
+
     @Test
-    public void testNewLRUPriorityQueue(){
+    public void testNewLRUPriorityQueue() {
         int testQueueLen = 2;
         initMockedSharedPreferences();
         LRUPriorityQueue lpq = new LRUPriorityQueue(mSharedPref, testQueueLen,
@@ -45,13 +66,16 @@ public class LRUPriorityQueueTest {
 
         assertEquals(0, lpq.size());
 
-        for(int i = 0; i < testQueueLen; i++){
+        for (int i = 0; i < testQueueLen; i++) {
             lpq.enqueue(RIGGED_QUEUE[i]);
             when(mSharedPref.getString(eq(lpq.buildKeyForm(i)), anyString()))
                     .thenReturn(RIGGED_QUEUE[i]);
         }
 
         assertEquals(testQueueLen, lpq.size());
+        String[] qRepr = buildQueueRepr(testQueueLen);
+        String[] actualContents = lpq.getContents();
+        assertArrayEquals(qRepr, actualContents);
     }
 
 }
