@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -51,7 +52,7 @@ public class LRUPriorityQueueTest {
      * @return
      */
     private String[] buildQueueRepr(int queueLen) {
-        LinkedList<String> riggedQueueSlice = (LinkedList<String>) Arrays.asList(Arrays.copyOf
+        List<String> riggedQueueSlice = Arrays.asList(Arrays.copyOf
                 (RIGGED_QUEUE, queueLen));
         Collections.reverse(riggedQueueSlice);
         return (String[]) riggedQueueSlice.toArray();
