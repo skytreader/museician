@@ -2,7 +2,6 @@ package net.skytreader.museician;
 
 import android.content.SharedPreferences;
 
-import java.lang.reflect.Array;
 import java.util.LinkedList;
 
 /**

@@ -41,6 +41,12 @@ public class LRUPriorityQueueTest {
         when(mSharedPrefEditor.commit()).thenReturn(true);
     }
 
+    private void mockEnqueue(LRUPriorityQueue lpq, int index){
+        lpq.enqueue(RIGGED_QUEUE[index]);
+        when(mSharedPref.getString(eq(lpq.buildKeyForm(index)), anyString()))
+                .thenReturn(RIGGED_QUEUE[index]);
+    }
+
     /**
      * This method assumes that you are inserting the elements of
      * RIGGED_QUEUE from index 0 onwards which would result to a queue where
@@ -67,15 +73,37 @@ public class LRUPriorityQueueTest {
         assertEquals(0, lpq.size());
 
         for (int i = 0; i < testQueueLen; i++) {
-            lpq.enqueue(RIGGED_QUEUE[i]);
-            when(mSharedPref.getString(eq(lpq.buildKeyForm(i)), anyString()))
-                    .thenReturn(RIGGED_QUEUE[i]);
+            mockEnqueue(lpq, i);
         }
 
         assertEquals(testQueueLen, lpq.size());
         String[] qRepr = buildQueueRepr(testQueueLen);
         String[] actualContents = lpq.getContents();
         assertArrayEquals(qRepr, actualContents);
+    }
+
+    @Test
+    public void testPriorityQueueEviction(){
+        int testQueueLen = 2;
+        initMockedSharedPreferences();
+        LRUPriorityQueue lpq = new LRUPriorityQueue(mSharedPref, testQueueLen,
+                TEST_NAMESPACE);
+
+        assertEquals(0, lpq.size());
+
+        for (int i = 0; i < testQueueLen; i++) {
+            mockEnqueue(lpq, i);
+        }
+
+        assertEquals(testQueueLen, lpq.size());
+
+        mockEnqueue(lpq, testQueueLen);
+        String[] qRepr = {
+                RIGGED_QUEUE[2], RIGGED_QUEUE[1]
+        };
+        String[] actualContents = lpq.getContents();
+        assertArrayEquals(qRepr, actualContents);
+        assertEquals(testQueueLen, lpq.size());
     }
 
 }
