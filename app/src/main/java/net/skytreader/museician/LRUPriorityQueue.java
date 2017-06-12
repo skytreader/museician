@@ -2,6 +2,7 @@ package net.skytreader.museician;
 
 import android.content.SharedPreferences;
 
+import java.lang.reflect.Array;
 import java.util.LinkedList;
 
 /**
@@ -72,5 +73,9 @@ public class LRUPriorityQueue {
         for(int i = 0; i < limit; i++){
             kvStore.set(buildKeyForm(i), representation.get(i));
         }
+    }
+
+    private String[] getContents(){
+        return Array.newInstance(representation, representation.size());
     }
 }

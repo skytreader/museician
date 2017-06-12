@@ -29,18 +29,17 @@ public class LRUPriorityQueueTest {
             "UMF"
     };
 
-    private KVStore createMockedKVStore(){
+    private void initMockedSharedPreferences(){
         mSharedPref = mock(SharedPreferences.class);
         mSharedPrefEditor = mock(SharedPreferences.Editor.class);
         when(mSharedPref.edit()).thenReturn(mSharedPrefEditor);
         when(mSharedPrefEditor.commit()).thenReturn(true);
-        return new KVStore(mSharedPref);
     }
 
     @Test
     public void testNewLRUPriorityQueue(){
         int testQueueLen = 2;
-        KVStore kvs = createMockedKVStore();
+        initMockedSharedPreferences();
         LRUPriorityQueue lpq = new LRUPriorityQueue(mSharedPref, testQueueLen,
                 TEST_NAMESPACE);
 
