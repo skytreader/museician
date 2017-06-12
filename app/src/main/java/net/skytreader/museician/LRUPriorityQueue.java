@@ -61,15 +61,22 @@ public class LRUPriorityQueue {
     }
 
     public void enqueue(String val){
-        int nextIndex = representation.size();
+        int valIndex = representation.indexOf(val);
 
-        if(nextIndex == lenLimit){
-            representation.removeLast();
+        if(valIndex < 0) {
+            int nextIndex = representation.size();
+
+            if (nextIndex == lenLimit) {
+                representation.removeLast();
+            }
+            representation.addFirst(val);
+        } else{
+            representation.remove(valIndex);
+            representation.addFirst(val);
         }
-        representation.addFirst(val);
-        int limit = representation.size();
 
-        for(int i = 0; i < limit; i++){
+        int limit = representation.size();
+        for (int i = 0; i < limit; i++) {
             kvStore.set(buildKeyForm(i), representation.get(i));
         }
     }
