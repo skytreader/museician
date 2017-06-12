@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.nbsp.materialfilepicker.ui.DirectoryAdapter;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.util.Arrays;
@@ -38,6 +40,22 @@ public class HomeChooserActivity extends AppCompatActivity {
     private SharedPreferences _kvstore;
     private KVStore kvstore;
     private LRUPriorityQueue recentFiles;
+
+    class RecentFilesItemClickListener implements AdapterView
+            .OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int
+                position, long id) {
+            // TODO Check Android docs for ArrayAdapter and AdapterView for
+            // better handling of this (i.e., don't require outer class stuff).
+            String chosenFile = HomeChooserActivity.this
+                    .mostRecentFiles[position];
+            HomeChooserActivity.this.refreshJamButtonHint(Utils
+                    .extractFilename(chosenFile.split("/")));
+            HomeChooserActivity.this.playFilePath = chosenFile;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +85,8 @@ public class HomeChooserActivity extends AppCompatActivity {
         mostRecentFiles = recentFiles.getContents();
         Log.i("recentFiles", Arrays.toString(mostRecentFiles));
         constructRecentFilesListView(appContext, mostRecentFiles);
+        ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
+        recentFiles.setOnItemClickListener(new RecentFilesItemClickListener());
     }
 
     private void constructRecentFilesListView(Context appContext, String[]
