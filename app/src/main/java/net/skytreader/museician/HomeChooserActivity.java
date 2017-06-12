@@ -34,6 +34,7 @@ public class HomeChooserActivity extends AppCompatActivity {
 
     private SharedPreferences _kvstore;
     private KVStore kvstore;
+    private LRUPriorityQueue recentFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,24 @@ public class HomeChooserActivity extends AppCompatActivity {
         countdownSecondsET.setText(appContext.getResources()
                 .getString(R.string.countdown_default));
 
-        // Check (and get) the permission for reading external storage.
+        checkAndAskReadingPermission();
+
+        // Check (and get) related data from SharedPreferences KV-Store.
+        // NOTE: Android tutorial uses the Context from getActivity. I wonder
+        // how this is different.
+        _kvstore = appContext.getSharedPreferences(getString
+                (R.string.shared_preferences_key), Context.MODE_PRIVATE);
+        recentFiles = new LRUPriorityQueue(_kvstore, 4, getString(R.string
+                .kv_recent_files));
+        kvstore = new KVStore(_kvstore);
+        // TODO: Maybe we can just getString whenever we need lastDirectory?
+        // TODO do away with the field variable.
+        lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
+        // TODO: actually use this
+        mostRecentFiles = recentFiles.getContents();
+    }
+
+    private void checkAndAskReadingPermission(){
         int permissionStatus = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionStatus == PackageManager.PERMISSION_DENIED) {
@@ -60,31 +78,7 @@ public class HomeChooserActivity extends AppCompatActivity {
                         PermissionsRequest.FILE_READ);
             }
         }
-
-        // Check (and get) related data from SharedPreferences KV-Store.
-        // NOTE: Android tutorial uses the Context from getActivity. I wonder
-        // how this is different.
-        _kvstore = appContext.getSharedPreferences(getString
-                (R.string.shared_preferences_key), Context.MODE_PRIVATE);
-        kvstore = new KVStore(_kvstore);
-        // TODO: Maybe we can just getString whenever we need lastDirectory?
-        // TODO do away with the field variable.
-        lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
-        // TODO: actually use this
-        mostRecentFiles = constructMostRecentFilenames(_kvstore, RECENCY_LIMIT);
     }
-
-    private String[] constructMostRecentFilenames(SharedPreferences kvstore,
-                                                  int recencyCount) {
-        String[] recentFilenames = new String[recencyCount];
-
-        for (int i = 0; i < recencyCount; i++) {
-            recentFilenames[i] = kvstore.getString(getString(R.string
-                    .kv_recent_files) + Integer.toString(i + 1), null);
-        }
-        return recentFilenames;
-    }
-
 
     private String extractFilepath(String[] filepathComponents) {
         return TextUtils.join("/",
@@ -111,8 +105,8 @@ public class HomeChooserActivity extends AppCompatActivity {
             playFilePath = filepath;
             lastDirectory = extractFilepath(filepathComponents);
 
-            // Set to
             saveLastDirectory(lastDirectory);
+            recentFiles.enqueue(filepath);
 
             String newHint = getApplicationContext().getResources().getString
                     (R.string.start_jam_cta);
