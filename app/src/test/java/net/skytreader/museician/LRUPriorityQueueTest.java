@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -100,6 +101,59 @@ public class LRUPriorityQueueTest {
         mockEnqueue(lpq, testQueueLen);
         String[] qRepr = {
                 RIGGED_QUEUE[2], RIGGED_QUEUE[1]
+        };
+        String[] actualContents = lpq.getContents();
+        assertArrayEquals(qRepr, actualContents);
+        assertEquals(testQueueLen, lpq.size());
+    }
+
+    @Test
+    public void testRecencyRefreshEdge(){
+        int testQueueLen = 2;
+        initMockedSharedPreferences();
+        LRUPriorityQueue lpq = new LRUPriorityQueue(mSharedPref, testQueueLen,
+                TEST_NAMESPACE);
+
+        assertEquals(0, lpq.size());
+
+        for (int i = 0; i < testQueueLen; i++) {
+            mockEnqueue(lpq, i);
+        }
+
+        assertEquals(testQueueLen, lpq.size());
+
+        mockEnqueue(lpq, 0);
+        String[] qRepr = {
+                RIGGED_QUEUE[0], RIGGED_QUEUE[1]
+        };
+        String[] actualContents = lpq.getContents();
+        assertArrayEquals(qRepr, actualContents);
+        assertEquals(testQueueLen, lpq.size());
+    }
+
+    @Test
+    public void testRecencyRefreshMiddle(){
+        int testQueueLen = 3;
+        initMockedSharedPreferences();
+        LRUPriorityQueue lpq = new LRUPriorityQueue(mSharedPref, testQueueLen,
+                TEST_NAMESPACE);
+
+        assertEquals(0, lpq.size());
+
+        for (int i = 0; i < testQueueLen; i++) {
+            mockEnqueue(lpq, i);
+        }
+
+        assertEquals(testQueueLen, lpq.size());
+
+        // A little deviation from the norm
+        lpq.enqueue(RIGGED_QUEUE[1]);
+        when(mSharedPref.getString(eq(lpq.buildKeyForm(0)), anyString()))
+                .thenReturn(RIGGED_QUEUE[1]);
+        when(mSharedPref.getString(eq(lpq.buildKeyForm(1)), anyString()))
+                .thenReturn(RIGGED_QUEUE[2]);
+        String[] qRepr = {
+                RIGGED_QUEUE[1], RIGGED_QUEUE[2], RIGGED_QUEUE[0]
         };
         String[] actualContents = lpq.getContents();
         assertArrayEquals(qRepr, actualContents);
