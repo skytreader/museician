@@ -10,9 +10,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -61,8 +64,12 @@ public class HomeChooserActivity extends AppCompatActivity {
         // TODO: Maybe we can just getString whenever we need lastDirectory?
         // TODO do away with the field variable.
         lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
-        // TODO: actually use this
         mostRecentFiles = recentFiles.getContents();
+        Log.i("recentFiles", Arrays.toString(mostRecentFiles));
+        ArrayAdapter<String> adapter = new ArrayAdapter(appContext, R
+                .layout.activity_home_chooser, mostRecentFiles);
+        ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
+        recentFiles.setAdapter(adapter);
     }
 
     private void checkAndAskReadingPermission(){
