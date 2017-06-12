@@ -10,6 +10,7 @@
     <string name="file_permission_msg">Please grant file access to
         Museician. Functionality might be limited otherwise.</string>
     <string name="jamming_msg">Now Playing:</string>
+    <string name="recent_files">Recent Jams:</string>
 
     <string name="shared_preferences_key">net.skytreader.museician
         .KVSTORE_KEY</string>

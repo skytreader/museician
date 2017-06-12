@@ -58,7 +58,7 @@ public class HomeChooserActivity extends AppCompatActivity {
         // how this is different.
         _kvstore = appContext.getSharedPreferences(getString
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
-        recentFiles = new LRUPriorityQueue(_kvstore, 4, getString(R.string
+        recentFiles = new LRUPriorityQueue(_kvstore, RECENCY_LIMIT, getString(R.string
                 .kv_recent_files));
         kvstore = new KVStore(_kvstore);
         // TODO: Maybe we can just getString whenever we need lastDirectory?
@@ -66,8 +66,18 @@ public class HomeChooserActivity extends AppCompatActivity {
         lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
         mostRecentFiles = recentFiles.getContents();
         Log.i("recentFiles", Arrays.toString(mostRecentFiles));
+        constructRecentFilesListView(appContext, mostRecentFiles);
+    }
+
+    private void constructRecentFilesListView(Context appContext, String[]
+            recentFilepaths){
+        String[] recentFilenames = new String[recentFilepaths.length];
+        for(int i = 0; i < recentFilepaths.length; i++){
+            recentFilenames[i] = Utils.extractFilename(recentFilepaths[i]
+                    .split("/"));
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter(appContext, android.R
-                .layout.simple_list_item_1, mostRecentFiles);
+                .layout.simple_list_item_1, recentFilenames);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
         recentFiles.setAdapter(adapter);
     }
@@ -104,22 +114,25 @@ public class HomeChooserActivity extends AppCompatActivity {
 
         if (requestCode == PermissionsRequest.FILE_READ &&
                 resultCode == RESULT_OK) {
-            Button startJamming = (Button) findViewById(R.id.startJamming);
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
             String filename = Utils.extractFilename(filepathComponents);
-            playFilePath = filepath;
             lastDirectory = extractFilepath(filepathComponents);
+            playFilePath = filepath;
 
             saveLastDirectory(lastDirectory);
             recentFiles.enqueue(filepath);
-
-            String newHint = getApplicationContext().getResources().getString
-                    (R.string.start_jam_cta);
-            startJamming.setHint(newHint + " " + filename);
-            startJamming.setEnabled(true);
+            refreshJamButtonHint(filename);
         }
+    }
+
+    private void refreshJamButtonHint(String filename){
+        Button startJamming = (Button) findViewById(R.id.startJamming);
+        String newHint = getApplicationContext().getResources().getString
+                (R.string.start_jam_cta);
+        startJamming.setHint(newHint + " " + filename);
+        startJamming.setEnabled(true);
     }
 
     @Override
