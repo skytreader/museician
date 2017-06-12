@@ -76,6 +76,6 @@ public class LRUPriorityQueue {
     }
 
     public String[] getContents(){
-        return (String[]) representation.toArray();
+        return representation.toArray(new String[representation.size()]);
     }
 }
