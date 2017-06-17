@@ -137,7 +137,6 @@ public class HomeChooserActivity extends AppCompatActivity {
             playFilePath = filepath;
 
             saveLastDirectory(lastDirectory);
-            recentFiles.enqueue(filepath);
             refreshJamButtonHint(filename);
         }
     }
