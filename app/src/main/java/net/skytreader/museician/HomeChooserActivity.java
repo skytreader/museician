@@ -52,7 +52,6 @@ public class HomeChooserActivity extends AppCompatActivity {
             String chosenFilename = Utils.extractFilename(chosenFile.split(
                     ("/")));
             HomeChooserActivity.this.refreshJamButtonHint(chosenFilename);
-            HomeChooserActivity.this.recentFiles.enqueue(chosenFile);
             HomeChooserActivity.this.playFilePath = chosenFile;
         }
     }
@@ -175,6 +174,7 @@ public class HomeChooserActivity extends AppCompatActivity {
             throw new RuntimeException("startJamming called while " +
                     "playFilePath is not properly set.");
         }
+        recentFiles.enqueue(playFilePath);
         Intent intent = new Intent(this, CountdownPlayActivity.class);
         EditText countdownSecondsET = (EditText) findViewById(R.id
                 .countdownSeconds);
