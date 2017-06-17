@@ -33,7 +33,6 @@ public class HomeChooserActivity extends AppCompatActivity {
 
     private String playFilePath;
 
-    private String lastDirectory;
     private String[] mostRecentFiles;
 
     private SharedPreferences _kvstore;
@@ -78,9 +77,6 @@ public class HomeChooserActivity extends AppCompatActivity {
         recentFiles = new LRUPriorityQueue(_kvstore, RECENCY_LIMIT, getString(R.string
                 .kv_recent_files));
         kvstore = new KVStore(_kvstore);
-        // TODO: Maybe we can just getString whenever we need lastDirectory?
-        // TODO do away with the field variable.
-        lastDirectory = kvstore.get(getString(R.string.kv_last_directory), "/");
         mostRecentFiles = recentFiles.getContents();
         Log.i("recentFiles", Arrays.toString(mostRecentFiles));
         constructRecentFilesListView(appContext, mostRecentFiles);
@@ -123,7 +119,6 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     private void saveLastDirectory(String lastDirectory) {
-        this.lastDirectory = lastDirectory;
         kvstore.set(getString(R.string.kv_last_directory), lastDirectory);
     }
 
@@ -137,7 +132,7 @@ public class HomeChooserActivity extends AppCompatActivity {
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
             String filename = Utils.extractFilename(filepathComponents);
-            lastDirectory = extractFilepath(filepathComponents);
+            String lastDirectory = extractFilepath(filepathComponents);
             playFilePath = filepath;
 
             saveLastDirectory(lastDirectory);
@@ -190,6 +185,8 @@ public class HomeChooserActivity extends AppCompatActivity {
     }
 
     public void chooseJamSong(View view) {
+        String lastDirectory = kvstore.get(getString(R.string
+                .kv_last_directory), "/");
         Utils.createMaterialFilePicker(this, lastDirectory).start();
     }
 }
