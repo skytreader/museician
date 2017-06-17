@@ -49,8 +49,10 @@ public class HomeChooserActivity extends AppCompatActivity {
             // better handling of this (i.e., don't require outer class stuff).
             String chosenFile = HomeChooserActivity.this
                     .mostRecentFiles[position];
-            HomeChooserActivity.this.refreshJamButtonHint(Utils
-                    .extractFilename(chosenFile.split("/")));
+            String chosenFilename = Utils.extractFilename(chosenFile.split(
+                    ("/")));
+            HomeChooserActivity.this.refreshJamButtonHint(chosenFilename);
+            HomeChooserActivity.this.recentFiles.enqueue(chosenFile);
             HomeChooserActivity.this.playFilePath = chosenFile;
         }
     }
