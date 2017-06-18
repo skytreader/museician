@@ -118,6 +118,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
 
         if (requestCode == PermissionsRequest.FILE_READ &&
                 resultCode == RESULT_OK) {
+            countdownPlayer.toggleStop();
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
