@@ -6,6 +6,7 @@ import android.media.ToneGenerator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class CountdownPlayActivity extends AppCompatActivity {
@@ -13,6 +14,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
     private CountdownPlayer countdownPlayer;
 
     private TextView statusUpdateElement;
+    private SeekBar seekBar;
     private int countTime;
     private long intervalMillis;
 
@@ -34,6 +36,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
         countdownPlayer = new CountdownPlayer(this, playFilePath);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
         beginCountdown();
     }
 
