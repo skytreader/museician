@@ -23,7 +23,7 @@
         android:id="@+id/nowPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/statusScreen"/>
+        android:layout_below="@+id/seekBar"/>
 
     <Button
         android:id="@+id/chooseJamSong"
