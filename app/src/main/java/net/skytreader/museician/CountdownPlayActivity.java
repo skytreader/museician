@@ -27,7 +27,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
             seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
             seekUpdateHandler.postDelayed(this, 100);
         }
-    }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

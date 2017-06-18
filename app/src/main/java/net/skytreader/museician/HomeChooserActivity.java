@@ -69,7 +69,16 @@ public class HomeChooserActivity extends AppCompatActivity {
                 .getString(R.string.countdown_default));
 
         checkAndAskReadingPermission();
+        useCachedStuff(appContext);
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        useCachedStuff(getApplicationContext());
+    }
+
+    private void useCachedStuff(Context appContext){
         // Check (and get) related data from SharedPreferences KV-Store.
         // NOTE: Android tutorial uses the Context from getActivity. I wonder
         // how this is different.
