@@ -2,7 +2,9 @@ package net.skytreader.museician;
 
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,15 @@ public class CountdownPlayActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private int countTime;
     private long intervalMillis;
+
+    private Handler seekUpdateHandler = new Handler();
+    private Runnable seekUpdateRunner = new Runnable(){
+        @Override
+        public void run() {
+            seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
+            seekUpdateHandler.postDelayed(this, 100);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +48,15 @@ public class CountdownPlayActivity extends AppCompatActivity {
         intervalMillis = 1000L;
         countdownPlayer = new CountdownPlayer(this, playFilePath);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        setupSeekbar();
         beginCountdown();
+    }
+
+    private void setupSeekbar(){
+        MediaPlayer mp = countdownPlayer.getMediaPlayer();
+        seekBar.setMax(mp.getDuration());
+        seekBar.setProgress(mp.getCurrentPosition());
+        seekUpdateHandler.postDelayed(seekUpdateRunner, 100);
     }
 
     private void beginCountdown() {
