@@ -126,7 +126,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
 
             appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
             setNowPlayingText(filename);
-            countdownPlayer.setPlayMedia(filepath);
+            countdownPlayer = new CountdownPlayer(this, filepath);
             recentFiles.enqueue(filepath);
             beginCountdown();
         }
