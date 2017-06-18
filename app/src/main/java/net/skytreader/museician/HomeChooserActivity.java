@@ -122,11 +122,7 @@ public class HomeChooserActivity extends AppCompatActivity {
         }
     }
 
-    private String extractFilepath(String[] filepathComponents) {
-        return TextUtils.join("/",
-                Arrays.copyOf(filepathComponents, filepathComponents.length -
-                        1));
-    }
+
 
     private void saveLastDirectory(String lastDirectory) {
         kvstore.set(getString(R.string.kv_last_directory), lastDirectory);
@@ -142,7 +138,7 @@ public class HomeChooserActivity extends AppCompatActivity {
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
             String filename = Utils.extractFilename(filepathComponents);
-            String lastDirectory = extractFilepath(filepathComponents);
+            String lastDirectory = Utils.extractFilepath(filepathComponents);
             playFilePath = filepath;
 
             saveLastDirectory(lastDirectory);

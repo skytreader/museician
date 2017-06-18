@@ -30,5 +30,6 @@
         android:hint="@string/choose_file_cta"
         android:layout_below="@+id/nowPlaying"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:onClick="chooseJamSong"/>
 </RelativeLayout>

@@ -1,9 +1,11 @@
 package net.skytreader.museician;
 
 import android.app.Activity;
+import android.text.TextUtils;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
@@ -36,4 +38,9 @@ public class Utils {
         return filepathComponents[filepathComponents.length - 1];
     }
 
+    public static String extractFilepath(String[] filepathComponents) {
+        return TextUtils.join("/",
+                Arrays.copyOf(filepathComponents, filepathComponents.length -
+                        1));
+    }
 }

@@ -1,5 +1,6 @@
 package net.skytreader.museician;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -8,8 +9,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 public class CountdownPlayActivity extends AppCompatActivity {
 
@@ -18,7 +22,9 @@ public class CountdownPlayActivity extends AppCompatActivity {
     private TextView statusUpdateElement;
     private SeekBar seekBar;
     private int countTime;
+    private int displayCount;
     private long intervalMillis;
+    private KVStore appKVStore;
 
     private Handler seekUpdateHandler = new Handler();
     private Runnable seekUpdateRunner = new Runnable(){
@@ -37,10 +43,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
         String playFilePath = i.getStringExtra(HomeChooserActivity
                 .HOME_PLAY_FILEPATH);
         String playFileDisplay = Utils.extractFilename(playFilePath.split("/"));
-        TextView nowPlaying = (TextView) findViewById(R.id.nowPlaying);
-        String playText = getApplicationContext().getResources().getString(R
-                .string.jamming_msg);
-        nowPlaying.setText(playText + " " + playFileDisplay);
+        setNowPlayingText(playFileDisplay);
 
         countTime = i.getIntExtra(HomeChooserActivity
                 .HOME_COUNTDOWN_SECONDS, 4);
@@ -48,8 +51,17 @@ public class CountdownPlayActivity extends AppCompatActivity {
         intervalMillis = 1000L;
         countdownPlayer = new CountdownPlayer(this, playFilePath);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        appKVStore = new KVStore(getSharedPreferences(getString(R.string
+                .shared_preferences_key), Context.MODE_PRIVATE));
         setupSeekbar();
         beginCountdown();
+    }
+
+    private void setNowPlayingText(String playFileDisplay) {
+        TextView nowPlaying = (TextView) findViewById(R.id.nowPlaying);
+        String playText = getApplicationContext().getResources().getString(R
+                .string.jamming_msg);
+        nowPlaying.setText(playText + " " + playFileDisplay);
     }
 
     private void setupSeekbar(){
@@ -62,16 +74,17 @@ public class CountdownPlayActivity extends AppCompatActivity {
     private void beginCountdown() {
         final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,
                 100);
+        displayCount = countTime;
         Runnable r = new Runnable() {
             public void run() {
-                while (countTime >= 0) {
+                while (displayCount >= 0) {
                     runOnUiThread(new Runnable() {
                                       public void run() {
                                           statusUpdateElement.setText
-                                                  (Integer.toString(countTime));
+                                                  (Integer.toString(displayCount));
                                           tg.startTone(ToneGenerator
                                                   .TONE_PROP_BEEP, 1000);
-                                          countTime--;
+                                          displayCount--;
                                       }
                                   }
                     );
@@ -86,5 +99,30 @@ public class CountdownPlayActivity extends AppCompatActivity {
             }
         };
         new Thread(r).start();
+    }
+
+    public void chooseJamSong(View v){
+        String lastDirectory = appKVStore.get(getString(R.string
+                .kv_last_directory), "/");
+        Utils.createMaterialFilePicker(this, lastDirectory).start();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PermissionsRequest.FILE_READ &&
+                resultCode == RESULT_OK) {
+            String filepath = data.getStringExtra(FilePickerActivity
+                    .RESULT_FILE_PATH);
+            String[] filepathComponents = filepath.split("/");
+            String filename = Utils.extractFilename(filepathComponents);
+            String lastDirectory = Utils.extractFilepath(filepathComponents);
+
+            appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
+            setNowPlayingText(filename);
+            countdownPlayer.setPlayMedia(filepath);
+            beginCountdown();
+        }
     }
 }

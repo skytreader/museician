@@ -40,6 +40,12 @@ public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
         return mp;
     }
 
+    public void setPlayMedia(String filepath){
+        mp.stop();
+        mp = MediaPlayer.create(activity, Uri.parse(filepath));
+        mp.seekTo(0);
+    }
+
     public void togglePause(){
         if(mp.isPlaying()){
             mp.pause();
