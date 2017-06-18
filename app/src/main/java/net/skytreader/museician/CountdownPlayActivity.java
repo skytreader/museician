@@ -2,6 +2,7 @@ package net.skytreader.museician;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.ToneGenerator;
@@ -25,6 +26,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
     private int displayCount;
     private long intervalMillis;
     private KVStore appKVStore;
+    private LRUPriorityQueue recentFiles;
 
     private Handler seekUpdateHandler = new Handler();
     private Runnable seekUpdateRunner = new Runnable(){
@@ -51,8 +53,11 @@ public class CountdownPlayActivity extends AppCompatActivity {
         intervalMillis = 1000L;
         countdownPlayer = new CountdownPlayer(this, playFilePath);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
-        appKVStore = new KVStore(getSharedPreferences(getString(R.string
-                .shared_preferences_key), Context.MODE_PRIVATE));
+        SharedPreferences sp = getSharedPreferences(getString(R.string
+                .shared_preferences_key), Context.MODE_PRIVATE);
+        appKVStore = new KVStore(sp);
+        recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
+                .kv_recent_files));
         setupSeekbar();
         beginCountdown();
     }
@@ -122,6 +127,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
             appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
             setNowPlayingText(filename);
             countdownPlayer.setPlayMedia(filepath);
+            recentFiles.enqueue(filepath);
             beginCountdown();
         }
     }
