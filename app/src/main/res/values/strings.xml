@@ -11,6 +11,7 @@
         Museician. Functionality might be limited otherwise.</string>
     <string name="jamming_msg">Now Playing:</string>
     <string name="recent_files">Recent Jams:</string>
+    <string name="file_not_found">Can\'t play specified file.</string>
 
     <string name="shared_preferences_key">net.skytreader.museician
         .KVSTORE_KEY</string>

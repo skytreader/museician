@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.IOException;
+
 /**
  * Mostly a wrapper to MediaPlayer.
  *
@@ -28,6 +30,11 @@ public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... params){
         mp.start();
         return null;
+    }
+
+    public void reset(String filepath) throws IOException{
+        mp.reset();
+        mp.setDataSource(filepath);
     }
 
     public void play(){

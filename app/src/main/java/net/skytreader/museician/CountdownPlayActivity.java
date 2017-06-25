@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
+import java.io.IOException;
 
 public class CountdownPlayActivity extends AppCompatActivity {
 
@@ -125,11 +128,20 @@ public class CountdownPlayActivity extends AppCompatActivity {
             String filename = Utils.extractFilename(filepathComponents);
             String lastDirectory = Utils.extractFilepath(filepathComponents);
 
-            appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
-            setNowPlayingText(filename);
-            countdownPlayer = new CountdownPlayer(this, filepath);
-            recentFiles.enqueue(filepath);
-            beginCountdown();
+            try{
+                countdownPlayer.reset(filepath);
+                appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
+                setNowPlayingText(filename);
+                //countdownPlayer = new CountdownPlayer(this, filepath);
+
+                recentFiles.enqueue(filepath);
+                beginCountdown();
+            } catch(IOException ioe){
+                Context c = getApplicationContext();
+                String msg = c.getResources().getString
+                        (R.string.file_not_found);
+                Toast.makeText(c, msg, Toast.LENGTH_SHORT);
+            }
         }
     }
 }
