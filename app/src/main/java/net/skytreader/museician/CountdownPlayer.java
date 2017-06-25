@@ -15,12 +15,10 @@ import android.util.Log;
 public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
 
     private Activity activity;
-    private String filepath;
     private MediaPlayer mp;
 
     public CountdownPlayer(Activity a, String filepath){
         activity = a;
-        this.filepath = filepath;
         mp = MediaPlayer.create(activity, Uri.parse(filepath));
         mp.setLooping(false);
         mp.setVolume(100F, 100F);
