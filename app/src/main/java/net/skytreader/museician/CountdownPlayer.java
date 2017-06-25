@@ -19,6 +19,14 @@ public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
     private Activity activity;
     private MediaPlayer mp;
 
+    private boolean isMediaPlayerReady = true;
+
+    private class PlayWhenPrepared implements MediaPlayer.OnPreparedListener {
+        public void onPrepared(MediaPlayer mp){
+            CountdownPlayer.this.isMediaPlayerReady = true;
+        }
+    }
+
     public CountdownPlayer(Activity a, String filepath){
         activity = a;
         mp = MediaPlayer.create(activity, Uri.parse(filepath));
@@ -28,14 +36,24 @@ public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params){
+        while(!this.isMediaPlayerReady){
+            try{
+                Thread.sleep(100);
+            } catch(InterruptedException ie){
+                Log.e("doInBackground", "InterruptedException occurred!", ie);
+            }
+        }
         mp.start();
         return null;
     }
 
     public void reset(String filepath) throws IOException{
+        isMediaPlayerReady = false;
+        mp.stop();
         mp.reset();
         mp.setDataSource(filepath);
-        mp.prepare();
+        mp.setOnPreparedListener(new PlayWhenPrepared());
+        mp.prepareAsync();
     }
 
     public void play(){
