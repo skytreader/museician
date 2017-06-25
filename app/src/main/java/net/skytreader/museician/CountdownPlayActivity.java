@@ -86,6 +86,7 @@ public class CountdownPlayActivity extends AppCompatActivity {
         Runnable r = new Runnable() {
             public void run() {
                 while (displayCount >= 0) {
+                    Log.i("counting", "counting " + displayCount);
                     runOnUiThread(new Runnable() {
                                       public void run() {
                                           statusUpdateElement.setText
@@ -103,7 +104,8 @@ public class CountdownPlayActivity extends AppCompatActivity {
                                 "occurred", ie);
                     }
                 }
-                countdownPlayer.execute(null, null);
+                Log.i("beginCountdown", "playing...");
+                countdownPlayer.play();
             }
         };
         new Thread(r).start();
