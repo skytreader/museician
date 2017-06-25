@@ -35,6 +35,7 @@ public class CountdownPlayer extends AsyncTask<Void, Void, Void> {
     public void reset(String filepath) throws IOException{
         mp.reset();
         mp.setDataSource(filepath);
+        mp.prepare();
     }
 
     public void play(){
