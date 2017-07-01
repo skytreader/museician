@@ -1,13 +1,13 @@
 package net.skytreader.museician;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +22,7 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.util.Arrays;
 
-public class HomeChooserActivity extends AppCompatActivity {
+public class HomeChooserActivity extends Activity {
 
     public static final String HOME_COUNTDOWN_SECONDS =
             "HOME_COUNTDOWN_SECONDS";
@@ -100,8 +100,8 @@ public class HomeChooserActivity extends AppCompatActivity {
             recentFilenames[i] = Utils.extractFilename(recentFilepaths[i]
                     .split("/"));
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter(appContext, android.R
-                .layout.simple_list_item_1, recentFilenames);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, R.layout.small_dark_list,
+                recentFilenames);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
         recentFiles.setAdapter(adapter);
     }

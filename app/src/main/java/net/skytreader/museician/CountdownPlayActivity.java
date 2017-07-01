@@ -1,5 +1,6 @@
 package net.skytreader.museician;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,7 +20,7 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.IOException;
 
-public class CountdownPlayActivity extends AppCompatActivity {
+public class CountdownPlayActivity extends Activity {
 
     private CountdownPlayer countdownPlayer;
 
