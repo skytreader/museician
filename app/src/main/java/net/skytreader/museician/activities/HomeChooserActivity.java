@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -16,10 +17,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
+import net.skytreader.museician.appstractions.FontCache;
 import net.skytreader.museician.appstractions.KVStore;
 import net.skytreader.museician.appstractions.LRUPriorityQueue;
 import net.skytreader.museician.appstractions.PermissionsRequest;
@@ -65,6 +68,17 @@ public class HomeChooserActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_chooser);
+        TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
+        if(appHeader != null) {
+            Typeface cinzel = FontCache.get
+                    ("fonts/CinzelDecorative-Regular.ttf",
+                            this);
+            appHeader.setTypeface(cinzel);
+            Log.i("HomeChooserActivity", "'Museician' should be in Cinzel");
+        }
+        TextView spam = (TextView) findViewById(R.id.spamTextView);
+        Typeface openSans = FontCache.get("fonts/CinzelDecorative-Regular.ttf", this);
+        spam.setTypeface(openSans);
 
         Context appContext = getApplicationContext();
 
