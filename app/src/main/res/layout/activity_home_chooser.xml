@@ -9,7 +9,8 @@
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
         android:padding="88dp">
-    <include layout="@layout/app_header"></include>
+
+    <include layout="@layout/app_header" android:id="@+id/appHeaderBar"></include>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

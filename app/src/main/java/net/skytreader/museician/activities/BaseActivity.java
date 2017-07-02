@@ -3,6 +3,7 @@ package net.skytreader.museician.activities;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.skytreader.museician.R;
@@ -17,7 +18,9 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
-        TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
+        setContentView(R.layout.app_header);
+        LinearLayout ll = (LinearLayout) findViewById(R.id.appHeaderBar);
+        TextView appHeader = (TextView) ll.findViewById(R.id.appNameHeader);
         if(appHeader != null) {
             Typeface cinzel = FontCache.get("fonts/CinzelDecorative-Regular.ttf",
                     this);
