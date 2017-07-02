@@ -27,6 +27,7 @@ public class FontCache {
                         "Exception", e);
                 return null;
             }
+            Log.i("FontCache", "found font file " + tf);
             fontCache.put(name, tf);
         }
         return tf;
