@@ -23,7 +23,8 @@ public class BaseActivity extends Activity {
         TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
         if(appHeader != null) {
             Log.i("branding", "appHeader is not null");
-            Typeface cinzel = FontCache.get("fonts/CinzelDecorative-Regular.ttf",
+            Typeface cinzel = FontCache.get
+                    ("assets/fonts/CinzelDecorative-Regular.ttf",
                     this);
             appHeader.setTypeface(cinzel);
         }

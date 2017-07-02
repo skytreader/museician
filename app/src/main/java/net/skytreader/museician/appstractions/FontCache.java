@@ -2,6 +2,7 @@ package net.skytreader.museician.appstractions;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 
 import java.util.Hashtable;
 
@@ -22,6 +23,8 @@ public class FontCache {
                 tf = Typeface.createFromAsset(context.getAssets(), name);
             }
             catch (Exception e) {
+                Log.e("FontCache", "Unable to load font file due to " +
+                        "Exception", e);
                 return null;
             }
             fontCache.put(name, tf);
