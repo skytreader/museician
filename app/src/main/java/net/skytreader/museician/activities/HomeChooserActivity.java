@@ -68,14 +68,14 @@ public class HomeChooserActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_chooser);
-        TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
+        /*TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
         if(appHeader != null) {
             Typeface cinzel = FontCache.get
                     ("fonts/CinzelDecorative-Regular.ttf",
                             this);
             appHeader.setTypeface(cinzel);
             Log.i("HomeChooserActivity", "'Museician' should be in Cinzel");
-        }
+        }*/
 
         Context appContext = getApplicationContext();
 

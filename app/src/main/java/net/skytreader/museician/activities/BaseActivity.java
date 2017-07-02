@@ -17,17 +17,16 @@ import net.skytreader.museician.appstractions.FontCache;
 public class BaseActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstance){
-        setContentView(R.layout.app_header);
+    protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
+        setContentView(R.layout.app_header);
         TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
-        if(appHeader != null) {
-            Typeface cinzel = FontCache.get
-                    ("fonts/CinzelDecorative-Regular.ttf",
-                    this);
-            appHeader.setTypeface(cinzel);
-            Log.i("BaseActivity", "'Museician' should be in Cinzel");
-        }
+        Typeface cinzel = FontCache.get
+                ("fonts/CinzelDecorative-Regular.ttf",
+                        this);
+        appHeader.setTypeface(cinzel);
+        Log.i("BaseActivity", "'Museician' should be in Cinzel");
+
     }
 
 }
