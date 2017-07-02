@@ -1,4 +1,6 @@
-package net.skytreader.museician;
+package net.skytreader.museician.appstractions;
+
+import net.skytreader.museician.appstractions.Utils;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

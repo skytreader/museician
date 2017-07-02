@@ -1,6 +1,8 @@
-package net.skytreader.museician;
+package net.skytreader.museician.appstractions;
 
 import android.content.SharedPreferences;
+
+import net.skytreader.museician.appstractions.LRUPriorityQueue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

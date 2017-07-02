@@ -1,4 +1,4 @@
-package net.skytreader.museician;
+package net.skytreader.museician.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,6 +19,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
+import net.skytreader.museician.appstractions.KVStore;
+import net.skytreader.museician.appstractions.LRUPriorityQueue;
+import net.skytreader.museician.appstractions.PermissionsRequest;
+import net.skytreader.museician.R;
+import net.skytreader.museician.appstractions.Utils;
 
 import java.util.Arrays;
 

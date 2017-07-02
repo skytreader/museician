@@ -1,4 +1,4 @@
-package net.skytreader.museician;
+package net.skytreader.museician.appstractions;
 
 import android.app.Activity;
 import android.media.MediaPlayer;

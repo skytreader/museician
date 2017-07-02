@@ -1,4 +1,4 @@
-package net.skytreader.museician;
+package net.skytreader.museician.appstractions;
 
 import android.content.SharedPreferences;
 

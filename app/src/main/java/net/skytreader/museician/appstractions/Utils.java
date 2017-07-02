@@ -1,9 +1,11 @@
-package net.skytreader.museician;
+package net.skytreader.museician.appstractions;
 
 import android.app.Activity;
 import android.text.TextUtils;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
+
+import net.skytreader.museician.appstractions.PermissionsRequest;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;

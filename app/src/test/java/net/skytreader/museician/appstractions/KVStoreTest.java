@@ -1,6 +1,8 @@
-package net.skytreader.museician;
+package net.skytreader.museician.appstractions;
 
 import android.content.SharedPreferences;
+
+import net.skytreader.museician.appstractions.KVStore;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

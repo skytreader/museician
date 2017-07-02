@@ -1,4 +1,4 @@
-package net.skytreader.museician;
+package net.skytreader.museician.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+
+import net.skytreader.museician.appstractions.CountdownPlayer;
+import net.skytreader.museician.appstractions.KVStore;
+import net.skytreader.museician.appstractions.LRUPriorityQueue;
+import net.skytreader.museician.appstractions.PermissionsRequest;
+import net.skytreader.museician.R;
+import net.skytreader.museician.appstractions.Utils;
 
 import java.io.IOException;
 
