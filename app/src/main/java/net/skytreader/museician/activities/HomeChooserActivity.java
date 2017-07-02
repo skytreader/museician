@@ -76,9 +76,6 @@ public class HomeChooserActivity extends BaseActivity {
             appHeader.setTypeface(cinzel);
             Log.i("HomeChooserActivity", "'Museician' should be in Cinzel");
         }
-        TextView spam = (TextView) findViewById(R.id.spamTextView);
-        Typeface openSans = FontCache.get("fonts/CinzelDecorative-Regular.ttf", this);
-        spam.setTypeface(openSans);
 
         Context appContext = getApplicationContext();
 
