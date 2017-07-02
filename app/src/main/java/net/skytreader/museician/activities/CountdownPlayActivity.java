@@ -26,7 +26,7 @@ import net.skytreader.museician.appstractions.Utils;
 
 import java.io.IOException;
 
-public class CountdownPlayActivity extends Activity {
+public class CountdownPlayActivity extends BaseActivity {
 
     private CountdownPlayer countdownPlayer;
 

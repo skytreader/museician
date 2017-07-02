@@ -28,7 +28,7 @@ import net.skytreader.museician.appstractions.Utils;
 
 import java.util.Arrays;
 
-public class HomeChooserActivity extends Activity {
+public class HomeChooserActivity extends BaseActivity {
 
     public static final String HOME_COUNTDOWN_SECONDS =
             "HOME_COUNTDOWN_SECONDS";

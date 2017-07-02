@@ -6,12 +6,15 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp">
 
+    <include layout="@layout/app_header" android:id="@+id/appHeader"></include>
+
     <TextView
         android:id="@+id/statusScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="28dp"/>
+        android:textSize="28dp"
+        android:layout_below="@+id/appHeader"/>
 
     <SeekBar
         android:id="@+id/seekBar"
