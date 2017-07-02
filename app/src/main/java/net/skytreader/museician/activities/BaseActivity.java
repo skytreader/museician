@@ -17,8 +17,8 @@ public class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstance){
-        super.onCreate(savedInstance);
         setContentView(R.layout.app_header);
+        super.onCreate(savedInstance);
         LinearLayout ll = (LinearLayout) findViewById(R.id.appHeaderBar);
         TextView appHeader = (TextView) ll.findViewById(R.id.appNameHeader);
         if(appHeader != null) {
