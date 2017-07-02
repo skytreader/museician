@@ -19,14 +19,23 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        setContentView(R.layout.app_header);
-        TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
+        setContentView(R.layout.activity_home_chooser);
+        /*TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
         Typeface cinzel = FontCache.get
                 ("fonts/CinzelDecorative-Regular.ttf",
                         this);
         appHeader.setTypeface(cinzel);
-        Log.i("BaseActivity", "'Museician' should be in Cinzel");
+        Log.i("BaseActivity", "'Museician' should be in Cinzel");*/
+        setCinzel();
+    }
 
+    protected void setCinzel(){
+        TextView tv = (TextView) findViewById(R.id.appNameHeader);
+        Typeface cinzel = FontCache.get("fonts/CinzelDecorative-Regular.ttf",
+                this);
+        tv.setTypeface(cinzel);
+        tv.setText("Hello!");
+        Log.i("BaseActivity", "'Museician' should be in Cinzel");
     }
 
 }
