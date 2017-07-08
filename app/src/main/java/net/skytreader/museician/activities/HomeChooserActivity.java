@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -17,12 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
-import net.skytreader.museician.appstractions.FontCache;
 import net.skytreader.museician.appstractions.KVStore;
 import net.skytreader.museician.appstractions.LRUPriorityQueue;
 import net.skytreader.museician.appstractions.PermissionsRequest;
@@ -31,7 +28,7 @@ import net.skytreader.museician.appstractions.Utils;
 
 import java.util.Arrays;
 
-public class HomeChooserActivity extends BaseActivity {
+public class HomeChooserActivity extends Activity {
 
     public static final String HOME_COUNTDOWN_SECONDS =
             "HOME_COUNTDOWN_SECONDS";
@@ -42,8 +39,6 @@ public class HomeChooserActivity extends BaseActivity {
     private String playFilePath;
 
     private String[] mostRecentFiles;
-
-    private SharedPreferences _kvstore;
     private KVStore kvstore;
     private LRUPriorityQueue recentFiles;
 
@@ -68,15 +63,6 @@ public class HomeChooserActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_chooser);
-        TextView appHeader = (TextView) findViewById(R.id.appNameHeader);
-        /*if(appHeader != null) {
-            Typeface cinzel = FontCache.get
-                    ("fonts/CinzelDecorative-Regular.ttf",
-                            this);
-            appHeader.setTypeface(cinzel);
-            Log.i("HomeChooserActivity", "'Museician' should be in Cinzel");
-        }*/
-        //setCinzel();
 
         Context appContext = getApplicationContext();
 
@@ -99,7 +85,7 @@ public class HomeChooserActivity extends BaseActivity {
         // Check (and get) related data from SharedPreferences KV-Store.
         // NOTE: Android tutorial uses the Context from getActivity. I wonder
         // how this is different.
-        _kvstore = appContext.getSharedPreferences(getString
+        SharedPreferences _kvstore = appContext.getSharedPreferences(getString
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
         recentFiles = new LRUPriorityQueue(_kvstore, RECENCY_LIMIT, getString(R.string
                 .kv_recent_files));
