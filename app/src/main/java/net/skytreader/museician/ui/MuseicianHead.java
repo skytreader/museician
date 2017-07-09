@@ -13,13 +13,9 @@ import net.skytreader.museician.appstractions.FontCache;
  */
 
 public class MuseicianHead extends TextView {
-    private String text;
 
     public MuseicianHead(Context c, AttributeSet attrs){
         super(c, attrs);
-
-        text = attrs.getAttributeValue("http://schemas.android" +
-                ".com/apk/res/net.skytreader.museician", "text");
 
         Typeface cinzel = FontCache.get("fonts/CinzelDecorative-Regular.ttf",
                 c);
