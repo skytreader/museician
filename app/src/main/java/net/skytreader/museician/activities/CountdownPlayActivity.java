@@ -40,6 +40,7 @@ public class CountdownPlayActivity extends Activity {
     private long intervalMillis;
     private KVStore appKVStore;
     private LRUPriorityQueue recentFiles;
+    private boolean isCountdownOngoing = false;
 
     private Handler seekUpdateHandler = new Handler();
     private Runnable seekUpdateRunner = new Runnable(){
@@ -48,14 +49,17 @@ public class CountdownPlayActivity extends Activity {
             seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
             seekUpdateHandler.postDelayed(this, 100);
 
-            int songProgress = countdownPlayer.getMediaPlayer()
-                    .getCurrentPosition();
-            long minElapsed = TimeUnit.MILLISECONDS.toMinutes((long)
-                    songProgress);
-            long secsElapsed = TimeUnit.MILLISECONDS.toSeconds((long)
-                    songProgress) - minElapsed;
-            statusUpdateElement.setText(String.format("%d:%d", minElapsed,
-                    secsElapsed));
+            if(!isCountdownOngoing) {
+                int songProgress = countdownPlayer.getMediaPlayer()
+                        .getCurrentPosition();
+                long minElapsed = TimeUnit.MILLISECONDS.toMinutes((long)
+                        songProgress);
+                long secsElapsed = TimeUnit.MILLISECONDS.toSeconds((long)
+                        songProgress) - TimeUnit.MINUTES.toSeconds(minElapsed);
+
+                statusUpdateElement.setText(String.format("%d:%d", minElapsed,
+                        secsElapsed));
+            }
         }
     };
 
@@ -105,6 +109,7 @@ public class CountdownPlayActivity extends Activity {
     private void beginCountdown() {
         final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,
                 100);
+        isCountdownOngoing = true;
         displayCount = countTime;
         Runnable r = new Runnable() {
             public void run() {
@@ -128,6 +133,7 @@ public class CountdownPlayActivity extends Activity {
                     }
                 }
                 Log.i("beginCountdown", "playing...");
+                isCountdownOngoing = false;
                 countdownPlayer.play();
             }
         };
