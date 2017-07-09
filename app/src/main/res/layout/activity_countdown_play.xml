@@ -12,9 +12,10 @@
         android:id="@+id/statusScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/appHeader"
         android:textAlignment="center"
-        android:textSize="28dp"
-        android:layout_below="@+id/appHeader"/>
+        android:textColor="@color/ledBlue"
+        android:textSize="48dp"/>
 
     <SeekBar
         android:id="@+id/seekBar"

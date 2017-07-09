@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.ToneGenerator;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import net.skytreader.museician.appstractions.CountdownPlayer;
+import net.skytreader.museician.appstractions.FontCache;
 import net.skytreader.museician.appstractions.KVStore;
 import net.skytreader.museician.appstractions.LRUPriorityQueue;
 import net.skytreader.museician.appstractions.PermissionsRequest;
@@ -68,6 +70,10 @@ public class CountdownPlayActivity extends Activity {
         appKVStore = new KVStore(sp);
         recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
                 .kv_recent_files));
+
+        Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
+        statusUpdateElement.setTypeface(led16Seg);
+
         setupSeekbar();
         beginCountdown();
     }
