@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Mostly a wrapper to MediaPlayer.
@@ -42,6 +44,22 @@ public class CountdownPlayer {
         mp.setVolume(100F, 100F);
         mp.setOnPreparedListener(new PlayWhenPrepared());
         mp.prepareAsync();
+    }
+
+    public String getTimedownDisplay(){
+        long duration = mp.getDuration();
+        long minDuration = TimeUnit.MILLISECONDS.toMinutes(duration);
+        long secsDuration = TimeUnit.MILLISECONDS.toSeconds(duration) -
+                TimeUnit.MINUTES.toSeconds(minDuration);
+
+        long progress = mp.getCurrentPosition();
+        long minProgress = TimeUnit.MILLISECONDS.toMinutes(progress);
+        long secsProgress = TimeUnit.MILLISECONDS.toSeconds(progress) -
+                TimeUnit.MINUTES.toSeconds(minProgress);
+
+        return String.format("%02d:%02d", minDuration - minProgress,
+                secsDuration - secsProgress);
+
     }
 
     public void play() {

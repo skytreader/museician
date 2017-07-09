@@ -50,15 +50,7 @@ public class CountdownPlayActivity extends Activity {
             seekUpdateHandler.postDelayed(this, 100);
 
             if(!isCountdownOngoing) {
-                int songProgress = countdownPlayer.getMediaPlayer()
-                        .getCurrentPosition();
-                long minElapsed = TimeUnit.MILLISECONDS.toMinutes((long)
-                        songProgress);
-                long secsElapsed = TimeUnit.MILLISECONDS.toSeconds((long)
-                        songProgress) - TimeUnit.MINUTES.toSeconds(minElapsed);
-
-                statusUpdateElement.setText(String.format("%d:%d", minElapsed,
-                        secsElapsed));
+                statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
             }
         }
     };
