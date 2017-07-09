@@ -48,17 +48,15 @@ public class CountdownPlayer {
 
     public String getTimedownDisplay(){
         long duration = mp.getDuration();
-        long minDuration = TimeUnit.MILLISECONDS.toMinutes(duration);
-        long secsDuration = TimeUnit.MILLISECONDS.toSeconds(duration) -
-                TimeUnit.MINUTES.toSeconds(minDuration);
+        long secsDuration = TimeUnit.MILLISECONDS.toSeconds(duration);
 
         long progress = mp.getCurrentPosition();
-        long minProgress = TimeUnit.MILLISECONDS.toMinutes(progress);
-        long secsProgress = TimeUnit.MILLISECONDS.toSeconds(progress) -
-                TimeUnit.MINUTES.toSeconds(minProgress);
+        long secsProgress = TimeUnit.MILLISECONDS.toSeconds(progress);
+        long secsLeft = secsDuration - secsProgress;
+        long minDisplay = secsLeft / 60;
+        long secsDisplay = secsLeft % 60;
 
-        return String.format("%02d:%02d", minDuration - minProgress,
-                secsDuration - secsProgress);
+        return String.format("%02d:%02d", minDisplay, secsDisplay);
 
     }
 
