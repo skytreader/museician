@@ -27,6 +27,7 @@ import net.skytreader.museician.R;
 import net.skytreader.museician.appstractions.Utils;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class CountdownPlayActivity extends Activity {
 
@@ -46,6 +47,15 @@ public class CountdownPlayActivity extends Activity {
         public void run() {
             seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
             seekUpdateHandler.postDelayed(this, 100);
+
+            int songProgress = countdownPlayer.getMediaPlayer()
+                    .getCurrentPosition();
+            long minElapsed = TimeUnit.MILLISECONDS.toMinutes((long)
+                    songProgress);
+            long secsElapsed = TimeUnit.MILLISECONDS.toSeconds((long)
+                    songProgress) - minElapsed;
+            statusUpdateElement.setText(String.format("%d:%d", minElapsed,
+                    secsElapsed));
         }
     };
 
