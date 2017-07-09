@@ -27,7 +27,6 @@ import net.skytreader.museician.R;
 import net.skytreader.museician.appstractions.Utils;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class CountdownPlayActivity extends Activity {
 
