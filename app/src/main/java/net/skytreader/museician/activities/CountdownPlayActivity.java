@@ -154,9 +154,9 @@ public class CountdownPlayActivity extends Activity {
                 countdownPlayer.reset(filepath);
                 appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
                 setNowPlayingText(filename);
-                //countdownPlayer = new CountdownPlayer(this, filepath);
 
                 recentFiles.enqueue(filepath);
+                setupSeekbar();
                 beginCountdown();
             } catch(IOException ioe){
                 Context c = getApplicationContext();
