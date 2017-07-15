@@ -55,6 +55,7 @@ public class CountdownPlayer {
         long secsLeft = secsDuration - secsProgress;
         long minDisplay = secsLeft / 60;
         long secsDisplay = secsLeft % 60;
+        secsDisplay = secsDisplay < 0 ? 0 : secsDisplay;
 
         return String.format("%02d:%02d", minDisplay, secsDisplay);
 
