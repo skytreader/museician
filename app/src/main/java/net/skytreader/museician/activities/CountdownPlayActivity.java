@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Handler;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -55,6 +56,11 @@ public class CountdownPlayActivity extends Activity {
             if(!isCountdownOngoing) {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
             }
+
+            // NOTE Semantically, this does not belong here but I'd rather
+            // rename the Runnable because creating _another_ Runnable just
+            // for this seems overkill!
+            deriveButtonState();
         }
     };
 
@@ -82,13 +88,22 @@ public class CountdownPlayActivity extends Activity {
 
         playBtn = (ImageButton) findViewById(R.id.playBtn);
         pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
-        deriveButtonState();
 
         Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
         statusUpdateElement.setTypeface(led16Seg);
 
+        setupStartState();
+    }
+
+    private void setupStartState(){
+        disableAllButtons();
         setupSeekbar();
         beginCountdown();
+    }
+
+    private void disableAllButtons(){
+        playBtn.setEnabled(false);
+        pauseBtn.setEnabled(false);
     }
 
     private void deriveButtonState(){
@@ -178,8 +193,7 @@ public class CountdownPlayActivity extends Activity {
                 setNowPlayingText(filename);
 
                 recentFiles.enqueue(filepath);
-                setupSeekbar();
-                beginCountdown();
+                setupStartState();
             } catch(IOException ioe){
                 Context c = getApplicationContext();
                 String msg = c.getResources().getString
