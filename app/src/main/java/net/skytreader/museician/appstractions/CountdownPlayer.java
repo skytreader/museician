@@ -19,12 +19,14 @@ public class CountdownPlayer {
 
     private Activity activity;
     private MediaPlayer mp;
+    private String lastDisplaySnapshot = "00:00";
 
     private boolean isMediaPlayerReady = true;
 
     private class PlayWhenPrepared implements MediaPlayer.OnPreparedListener {
         public void onPrepared(MediaPlayer mp) {
             CountdownPlayer.this.isMediaPlayerReady = true;
+            Log.i("PlayWhenPrepared", "media player should now be ready.");
         }
     }
 
@@ -35,6 +37,12 @@ public class CountdownPlayer {
         mp.setVolume(100F, 100F);
     }
 
+    /**
+     * Use this when loading a new song into the player.
+     *
+     * @param filepath
+     * @throws IOException
+     */
     public void reset(String filepath) throws IOException {
         isMediaPlayerReady = false;
         mp.stop();
@@ -46,19 +54,36 @@ public class CountdownPlayer {
         mp.prepareAsync();
     }
 
+    /**
+     * Use this after the MediaPlayer is stopped.
+     */
+    public void reset(){
+        isMediaPlayerReady = false;
+        //mp.stop();
+        mp.reset();
+        mp.setLooping(false);
+        mp.setVolume(100F, 100F);
+        mp.setOnPreparedListener(new PlayWhenPrepared());
+        //mp.prepareAsync();
+    }
+
     public String getTimedownDisplay(){
-        long duration = mp.getDuration();
-        long secsDuration = TimeUnit.MILLISECONDS.toSeconds(duration);
+        if(mp.isPlaying()) {
+            long duration = mp.getDuration();
+            long secsDuration = TimeUnit.MILLISECONDS.toSeconds(duration);
 
-        long progress = mp.getCurrentPosition();
-        long secsProgress = TimeUnit.MILLISECONDS.toSeconds(progress);
-        long secsLeft = secsDuration - secsProgress;
-        long minDisplay = secsLeft / 60;
-        long secsDisplay = secsLeft % 60;
-        secsDisplay = secsDisplay < 0 ? 0 : secsDisplay;
+            long progress = mp.getCurrentPosition();
+            long secsProgress = TimeUnit.MILLISECONDS.toSeconds(progress);
+            long secsLeft = secsDuration - secsProgress;
+            long minDisplay = secsLeft / 60;
+            long secsDisplay = secsLeft % 60;
+            secsDisplay = secsDisplay < 0 ? 0 : secsDisplay;
 
-        return String.format("%02d:%02d", minDisplay, secsDisplay);
+            lastDisplaySnapshot = String.format("%02d:%02d", minDisplay,
+                    secsDisplay);
+        }
 
+        return lastDisplaySnapshot;
     }
 
     public void play() {
@@ -86,6 +111,7 @@ public class CountdownPlayer {
     public void toggleStop() {
         if (mp.isPlaying()) {
             mp.stop();
+            reset();
         }
     }
 }
