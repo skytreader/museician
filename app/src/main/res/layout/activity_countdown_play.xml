@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/playBtn"
         android:layout_toEndOf="@+id/playBtn"
+        android:layout_below="@+id/nowPlaying"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:src="@drawable/pause"/>
