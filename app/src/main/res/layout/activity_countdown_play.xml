@@ -38,6 +38,16 @@
         android:adjustViewBounds="true"
         android:src="@drawable/play"/>
 
+    <ImageButton
+        android:id="@+id/pauseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/playBtn"
+        android:layout_toEndOf="@+id/playBtn"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/pause"/>
+
     <Button
         android:id="@+id/chooseJamSong"
         android:hint="@string/choose_file_cta"
