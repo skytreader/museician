@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ public class CountdownPlayActivity extends Activity {
 
     private TextView statusUpdateElement;
     private SeekBar seekBar;
+    private ImageButton playBtn;
+    private ImageButton pauseBtn;
+
     private int countTime;
     private int displayCount;
     private long intervalMillis;
@@ -76,11 +80,29 @@ public class CountdownPlayActivity extends Activity {
         recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
                 .kv_recent_files));
 
+        playBtn = (ImageButton) findViewById(R.id.playBtn);
+        pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
+        deriveButtonState();
+
         Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
         statusUpdateElement.setTypeface(led16Seg);
 
         setupSeekbar();
         beginCountdown();
+    }
+
+    private void deriveButtonState(){
+        MediaPlayer mp = countdownPlayer.getMediaPlayer();
+        playBtn.setEnabled(!mp.isPlaying());
+        pauseBtn.setEnabled(mp.isPlaying());
+    }
+
+    public void pressPlay(View v){
+        countdownPlayer.play();
+    }
+
+    public void pressPause(View v){
+        countdownPlayer.togglePause();
     }
 
     private void setNowPlayingText(String playFileDisplay) {

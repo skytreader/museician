@@ -36,7 +36,8 @@
         android:layout_below="@+id/nowPlaying"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:src="@drawable/play"/>
+        android:src="@drawable/play"
+        android:onClick="pressPlay"/>
 
     <ImageButton
         android:id="@+id/pauseBtn"
@@ -47,7 +48,8 @@
         android:layout_below="@+id/nowPlaying"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:src="@drawable/pause"/>
+        android:src="@drawable/pause"
+        android:onClick="pressPause"/>
 
     <Button
         android:id="@+id/chooseJamSong"
