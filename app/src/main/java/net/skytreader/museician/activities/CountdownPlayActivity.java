@@ -55,12 +55,11 @@ public class CountdownPlayActivity extends Activity {
 
             if(!isCountdownOngoing) {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
+                // NOTE Semantically, this does not belong here but I'd rather
+                // rename the Runnable because creating _another_ Runnable just
+                // for this seems overkill!
+                deriveButtonState();
             }
-
-            // NOTE Semantically, this does not belong here but I'd rather
-            // rename the Runnable because creating _another_ Runnable just
-            // for this seems overkill!
-            deriveButtonState();
         }
     };
 
