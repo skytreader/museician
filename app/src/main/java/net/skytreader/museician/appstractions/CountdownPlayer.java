@@ -54,19 +54,6 @@ public class CountdownPlayer {
         mp.prepareAsync();
     }
 
-    /**
-     * Use this after the MediaPlayer is stopped.
-     */
-    public void reset(){
-        isMediaPlayerReady = false;
-        //mp.stop();
-        mp.reset();
-        mp.setLooping(false);
-        mp.setVolume(100F, 100F);
-        mp.setOnPreparedListener(new PlayWhenPrepared());
-        //mp.prepareAsync();
-    }
-
     public String getTimedownDisplay(){
         if(mp.isPlaying()) {
             long duration = mp.getDuration();
@@ -111,7 +98,10 @@ public class CountdownPlayer {
     public void toggleStop() {
         if (mp.isPlaying()) {
             mp.stop();
-            reset();
+            mp.prepareAsync();
+            isMediaPlayerReady = false;
+            // FIXME Maybe don't create a new PlayWhenPrepared object everytime.
+            mp.setOnPreparedListener(new PlayWhenPrepared());
         }
     }
 }
