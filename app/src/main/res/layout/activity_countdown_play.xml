@@ -34,6 +34,16 @@
         android:layout_below="@+id/nowPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/stopBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:src="@drawable/stop"
+            android:onClick="pressStop"/>
+
         <ImageButton
             android:id="@+id/playBtn"
             android:layout_width="wrap_content"

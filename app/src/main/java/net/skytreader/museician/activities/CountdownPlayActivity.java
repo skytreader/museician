@@ -10,7 +10,6 @@ import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Handler;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -38,6 +37,7 @@ public class CountdownPlayActivity extends Activity {
     private SeekBar seekBar;
     private ImageButton playBtn;
     private ImageButton pauseBtn;
+    private ImageButton stopBtn;
 
     private int countTime;
     private int displayCount;
@@ -87,6 +87,7 @@ public class CountdownPlayActivity extends Activity {
 
         playBtn = (ImageButton) findViewById(R.id.playBtn);
         pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
+        stopBtn = (ImageButton) findViewById(R.id.stopBtn);
 
         Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
         statusUpdateElement.setTypeface(led16Seg);
@@ -103,12 +104,14 @@ public class CountdownPlayActivity extends Activity {
     private void disableAllButtons(){
         playBtn.setEnabled(false);
         pauseBtn.setEnabled(false);
+        stopBtn.setEnabled(false);
     }
 
     private void deriveButtonState(){
         MediaPlayer mp = countdownPlayer.getMediaPlayer();
         playBtn.setEnabled(!mp.isPlaying());
         pauseBtn.setEnabled(mp.isPlaying());
+        stopBtn.setEnabled(mp.isPlaying());
     }
 
     public void pressPlay(View v){
@@ -117,6 +120,10 @@ public class CountdownPlayActivity extends Activity {
 
     public void pressPause(View v){
         countdownPlayer.togglePause();
+    }
+
+    public void pressStop(View v){
+        countdownPlayer.toggleStop();
     }
 
     private void setNowPlayingText(String playFileDisplay) {
