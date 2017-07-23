@@ -30,6 +30,8 @@ public class CountdownPlayer {
         }
     }
 
+    private PlayWhenPrepared playPreparedListener = new PlayWhenPrepared();
+
     public CountdownPlayer(Activity a, String filepath) {
         activity = a;
         mp = MediaPlayer.create(activity, Uri.parse(filepath));
@@ -50,7 +52,7 @@ public class CountdownPlayer {
         mp.setDataSource(filepath);
         mp.setLooping(false);
         mp.setVolume(100F, 100F);
-        mp.setOnPreparedListener(new PlayWhenPrepared());
+        mp.setOnPreparedListener(playPreparedListener);
         mp.prepareAsync();
     }
 
@@ -100,8 +102,7 @@ public class CountdownPlayer {
             mp.stop();
             mp.prepareAsync();
             isMediaPlayerReady = false;
-            // FIXME Maybe don't create a new PlayWhenPrepared object everytime.
-            mp.setOnPreparedListener(new PlayWhenPrepared());
+            mp.setOnPreparedListener(playPreparedListener);
         }
     }
 }
