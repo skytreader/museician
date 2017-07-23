@@ -47,7 +47,7 @@ public class CountdownPlayActivity extends Activity {
     private boolean isCountdownOngoing = false;
 
     private Handler seekUpdateHandler = new Handler();
-    private Runnable seekUpdateRunner = new Runnable(){
+    private Runnable uiUpdateRunner = new Runnable(){
         @Override
         public void run() {
             seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
@@ -55,9 +55,6 @@ public class CountdownPlayActivity extends Activity {
 
             if(!isCountdownOngoing) {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
-                // NOTE Semantically, this does not belong here but I'd rather
-                // rename the Runnable because creating _another_ Runnable just
-                // for this seems overkill!
                 deriveButtonState();
             }
         }
@@ -137,7 +134,7 @@ public class CountdownPlayActivity extends Activity {
         MediaPlayer mp = countdownPlayer.getMediaPlayer();
         seekBar.setMax(mp.getDuration());
         seekBar.setProgress(mp.getCurrentPosition());
-        seekUpdateHandler.postDelayed(seekUpdateRunner, 100);
+        seekUpdateHandler.postDelayed(uiUpdateRunner, 100);
     }
 
     private void beginCountdown() {
