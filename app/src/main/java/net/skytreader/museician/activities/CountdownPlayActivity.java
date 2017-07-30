@@ -114,7 +114,7 @@ public class CountdownPlayActivity extends Activity {
         Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
         statusUpdateElement.setTypeface(led16Seg);
 
-        setupStartState();
+        setupSeekbar();
         beginCountdown();
     }
 
@@ -182,6 +182,7 @@ public class CountdownPlayActivity extends Activity {
     }
 
     private void beginCountdown() {
+        disableAllButtons();
         final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,
                 100);
         isCountdownOngoing = true;
