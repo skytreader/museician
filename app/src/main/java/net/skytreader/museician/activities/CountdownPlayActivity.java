@@ -38,6 +38,8 @@ public class CountdownPlayActivity extends Activity {
     private ImageButton playBtn;
     private ImageButton pauseBtn;
     private ImageButton stopBtn;
+    private ImageButton backBtn;
+    private ImageButton forwardBtn;
 
     private int countTime;
     private int displayCount;
@@ -85,6 +87,8 @@ public class CountdownPlayActivity extends Activity {
         playBtn = (ImageButton) findViewById(R.id.playBtn);
         pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
         stopBtn = (ImageButton) findViewById(R.id.stopBtn);
+        backBtn = (ImageButton) findViewById(R.id.backBtn);
+        forwardBtn = (ImageButton) findViewById(R.id.forwardBtn);
 
         Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
         statusUpdateElement.setTypeface(led16Seg);
@@ -98,10 +102,13 @@ public class CountdownPlayActivity extends Activity {
         beginCountdown();
     }
 
+    // FIXME find a more idiomatic way of writing this.
     private void disableAllButtons(){
         playBtn.setEnabled(false);
         pauseBtn.setEnabled(false);
         stopBtn.setEnabled(false);
+        backBtn.setEnabled(false);
+        forwardBtn.setEnabled(false);
     }
 
     private void deriveButtonState(){
@@ -109,6 +116,8 @@ public class CountdownPlayActivity extends Activity {
         playBtn.setEnabled(!mp.isPlaying());
         pauseBtn.setEnabled(mp.isPlaying());
         stopBtn.setEnabled(mp.isPlaying());
+        backBtn.setEnabled(mp.isPlaying());
+        forwardBtn.setEnabled(mp.isPlaying());
     }
 
     public void pressPlay(View v){
