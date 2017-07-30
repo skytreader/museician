@@ -47,6 +47,7 @@ public class CountdownPlayActivity extends Activity {
     private KVStore appKVStore;
     private LRUPriorityQueue recentFiles;
     private boolean isCountdownOngoing = false;
+    private boolean isStoppedFromFileLoad = false;
 
     private Handler seekUpdateHandler = new Handler();
     private Runnable uiUpdateRunner = new Runnable(){
@@ -98,7 +99,6 @@ public class CountdownPlayActivity extends Activity {
         intervalMillis = 1000L;
         countdownPlayer = new CountdownPlayer(this, playFilePath);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekbarMediaSeeker());
         SharedPreferences sp = getSharedPreferences(getString(R.string
                 .shared_preferences_key), Context.MODE_PRIVATE);
         appKVStore = new KVStore(sp);
@@ -115,12 +115,12 @@ public class CountdownPlayActivity extends Activity {
         statusUpdateElement.setTypeface(led16Seg);
 
         setupStartState();
+        beginCountdown();
     }
 
     private void setupStartState(){
         disableAllButtons();
         setupSeekbar();
-        beginCountdown();
     }
 
     // FIXME find a more idiomatic way of writing this.
@@ -142,7 +142,11 @@ public class CountdownPlayActivity extends Activity {
     }
 
     public void pressPlay(View v){
-        countdownPlayer.play();
+        if(isStoppedFromFileLoad){
+            beginCountdown();
+        } else {
+            countdownPlayer.play();
+        }
     }
 
     public void pressPause(View v){
@@ -151,6 +155,7 @@ public class CountdownPlayActivity extends Activity {
 
     public void pressStop(View v){
         countdownPlayer.toggleStop();
+        isStoppedFromFileLoad = false;
     }
 
     public void pressBack(View v) {
@@ -169,6 +174,7 @@ public class CountdownPlayActivity extends Activity {
     }
 
     private void setupSeekbar(){
+        seekBar.setOnSeekBarChangeListener(new SeekbarMediaSeeker());
         MediaPlayer mp = countdownPlayer.getMediaPlayer();
         seekBar.setMax(mp.getDuration());
         seekBar.setProgress(mp.getCurrentPosition());
@@ -222,6 +228,7 @@ public class CountdownPlayActivity extends Activity {
         if (requestCode == PermissionsRequest.FILE_READ &&
                 resultCode == RESULT_OK) {
             countdownPlayer.toggleStop();
+            isStoppedFromFileLoad = true;
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
@@ -234,7 +241,7 @@ public class CountdownPlayActivity extends Activity {
                 setNowPlayingText(filename);
 
                 recentFiles.enqueue(filepath);
-                setupStartState();
+                setupSeekbar();
             } catch(IOException ioe){
                 Context c = getApplicationContext();
                 String msg = c.getResources().getString
