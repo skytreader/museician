@@ -118,11 +118,6 @@ public class CountdownPlayActivity extends Activity {
         beginCountdown();
     }
 
-    private void setupStartState(){
-        disableAllButtons();
-        setupSeekbar();
-    }
-
     // FIXME find a more idiomatic way of writing this.
     private void disableAllButtons(){
         playBtn.setEnabled(false);
