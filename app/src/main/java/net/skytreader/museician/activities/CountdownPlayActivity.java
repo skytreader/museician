@@ -62,6 +62,26 @@ public class CountdownPlayActivity extends Activity {
         }
     };
 
+    private class SeekbarMediaSeeker implements SeekBar.OnSeekBarChangeListener{
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean
+                fromUser){
+            if(fromUser){
+                countdownPlayer.getMediaPlayer().seekTo(progress);
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +98,7 @@ public class CountdownPlayActivity extends Activity {
         intervalMillis = 1000L;
         countdownPlayer = new CountdownPlayer(this, playFilePath);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekbarMediaSeeker());
         SharedPreferences sp = getSharedPreferences(getString(R.string
                 .shared_preferences_key), Context.MODE_PRIVATE);
         appKVStore = new KVStore(sp);
