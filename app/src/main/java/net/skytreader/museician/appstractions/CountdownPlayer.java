@@ -105,4 +105,14 @@ public class CountdownPlayer {
             mp.setOnPreparedListener(playPreparedListener);
         }
     }
+
+    /**
+     * Make the media played seek by the given delta. E.g., a positive delta
+     * seeks forward while a negative delta seeks backward.
+     *
+     * @param delta
+     */
+    public void seek(int delta){
+        mp.seekTo(mp.getCurrentPosition() + delta);
+    }
 }

@@ -132,6 +132,14 @@ public class CountdownPlayActivity extends Activity {
         countdownPlayer.toggleStop();
     }
 
+    public void pressBack(View v) {
+        countdownPlayer.seek(-4000);
+    }
+
+    public void pressForward(View v) {
+        countdownPlayer.seek(4000);
+    }
+
     private void setNowPlayingText(String playFileDisplay) {
         TextView nowPlaying = (TextView) findViewById(R.id.nowPlaying);
         String playText = getApplicationContext().getResources().getString(R

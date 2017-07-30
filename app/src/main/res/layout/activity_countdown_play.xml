@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:src="@drawable/back"/>
+            android:src="@drawable/back"
+            android:onClick="pressBack"/>
 
         <ImageButton
             android:id="@+id/stopBtn"
@@ -78,7 +79,8 @@
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:src="@drawable/forward"/>
+            android:src="@drawable/forward"
+            android:onClick="pressForward"/>
 
     </LinearLayout>
 
