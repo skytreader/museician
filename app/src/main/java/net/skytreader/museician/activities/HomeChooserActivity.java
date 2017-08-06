@@ -80,10 +80,14 @@ public class HomeChooserActivity extends Activity {
         useCachedStuff(getApplicationContext());
     }
 
+    /**
+     * Check (and get) related data from SharedPreferences KV-Store.
+     *
+     * @param appContext
+     *      NOTE: Android tutorial uses the Context from getActivity. I
+     *      wonder how this is different.
+     */
     private void useCachedStuff(Context appContext){
-        // Check (and get) related data from SharedPreferences KV-Store.
-        // NOTE: Android tutorial uses the Context from getActivity. I wonder
-        // how this is different.
         SharedPreferences _kvstore = appContext.getSharedPreferences(getString
                 (R.string.shared_preferences_key), Context.MODE_PRIVATE);
         recentFiles = new LRUPriorityQueue(_kvstore, RECENCY_LIMIT, getString(R.string
