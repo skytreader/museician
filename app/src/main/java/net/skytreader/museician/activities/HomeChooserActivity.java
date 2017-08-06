@@ -25,8 +25,6 @@ import net.skytreader.museician.appstractions.PermissionsRequest;
 import net.skytreader.museician.R;
 import net.skytreader.museician.appstractions.Utils;
 
-import java.util.Arrays;
-
 public class HomeChooserActivity extends Activity {
 
     public static final String HOME_COUNTDOWN_SECONDS =
@@ -98,6 +96,9 @@ public class HomeChooserActivity extends Activity {
         if(mostRecentFiles.length == 0){
             findViewById(R.id.recentFilesLabel).setVisibility(View.GONE);
             recentFiles.setVisibility(View.GONE);
+        } else{
+            findViewById(R.id.recentFilesLabel).setVisibility(View.VISIBLE);
+            recentFiles.setVisibility(View.VISIBLE);
         }
         constructRecentFilesListView(appContext, mostRecentFiles);
         recentFiles.setOnItemClickListener(new RecentFilesItemClickListener());
