@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -91,9 +90,12 @@ public class HomeChooserActivity extends Activity {
                 .kv_recent_files));
         kvstore = new KVStore(_kvstore);
         mostRecentFiles = recentFiles.getContents();
-        Log.i("recentFiles", Arrays.toString(mostRecentFiles));
-        constructRecentFilesListView(appContext, mostRecentFiles);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
+        if(mostRecentFiles.length == 0){
+            findViewById(R.id.recentFilesLabel).setVisibility(View.GONE);
+            recentFiles.setVisibility(View.GONE);
+        }
+        constructRecentFilesListView(appContext, mostRecentFiles);
         recentFiles.setOnItemClickListener(new RecentFilesItemClickListener());
     }
 
