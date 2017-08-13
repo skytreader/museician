@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class CountdownPlayer {
 
     private Activity activity;
-    private MediaPlayer mp;
+    private static MediaPlayer mp;
     private String lastDisplaySnapshot = "00:00";
 
     private boolean isMediaPlayerReady = true;
@@ -34,9 +34,12 @@ public class CountdownPlayer {
 
     public CountdownPlayer(Activity a, String filepath) {
         activity = a;
-        mp = MediaPlayer.create(activity, Uri.parse(filepath));
-        mp.setLooping(false);
-        mp.setVolume(100F, 100F);
+        if(mp == null) {
+            Log.d("constructor", "about to create a new MediaPlayer instance");
+            mp = MediaPlayer.create(activity, Uri.parse(filepath));
+            mp.setLooping(false);
+            mp.setVolume(100F, 100F);
+        }
     }
 
     /**

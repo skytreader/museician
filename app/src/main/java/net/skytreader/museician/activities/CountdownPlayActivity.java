@@ -178,6 +178,7 @@ public class CountdownPlayActivity extends Activity {
 
     private void beginCountdown() {
         disableAllButtons();
+        countdownPlayer.toggleStop();
         final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_MUSIC,
                 100);
         isCountdownOngoing = true;
