@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,7 +34,12 @@ public class HomeChooserActivity extends Activity {
 
     private final int RECENCY_LIMIT = 4;
 
-    private String playFilePath;
+    /**
+     * Set to static so it could persist between orientation changes.
+     *
+     * FIXME Maybe use a Fragment for this? https://developer.android.com/guide/topics/resources/runtime-changes.html#RetainingAnObject
+     */
+    private static String playFilePath;
 
     private String[] mostRecentFiles;
     private KVStore kvstore;
@@ -49,10 +55,8 @@ public class HomeChooserActivity extends Activity {
             // better handling of this (i.e., don't require outer class stuff).
             String chosenFile = HomeChooserActivity.this
                     .mostRecentFiles[position];
-            String chosenFilename = Utils.extractFilename(chosenFile.split(
-                    ("/")));
-            HomeChooserActivity.this.refreshJamButtonHint(chosenFilename);
             HomeChooserActivity.this.playFilePath = chosenFile;
+            HomeChooserActivity.this.refreshJamButtonHint();
         }
     }
 
@@ -76,6 +80,7 @@ public class HomeChooserActivity extends Activity {
     public void onResume(){
         super.onResume();
         useCachedStuff(getApplicationContext());
+        refreshJamButtonHint();
     }
 
     /**
@@ -146,22 +151,35 @@ public class HomeChooserActivity extends Activity {
                 resultCode == RESULT_OK) {
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
+            // FIXME Optimization: filepath is splitted twice (once more in
+            // refreshJamButtonHint).
             String[] filepathComponents = filepath.split("/");
-            String filename = Utils.extractFilename(filepathComponents);
             String lastDirectory = Utils.extractFilepath(filepathComponents);
             playFilePath = filepath;
 
             saveLastDirectory(lastDirectory);
-            refreshJamButtonHint(filename);
+            refreshJamButtonHint();
         }
     }
 
-    private void refreshJamButtonHint(String filename){
-        Button startJamming = (Button) findViewById(R.id.startJamming);
-        String newHint = getApplicationContext().getResources().getString
-                (R.string.start_jam_cta);
-        startJamming.setHint(newHint + " " + filename);
-        startJamming.setEnabled(true);
+    /**
+     * Assumes that the playFilePath static variable has been set as this loads
+     * the text hint based on the contents of playFilePath.
+     */
+    private void refreshJamButtonHint(){
+        // NOTE this state has never been observed but is nonetheless checked
+        // for preemptive measures.
+        if(playFilePath != null && playFilePath.trim().length() != 0) {
+            String filename = Utils.extractFilename(playFilePath.split("/"));
+            Button startJamming = (Button) findViewById(R.id.startJamming);
+            String newHint = getApplicationContext().getResources().getString
+                    (R.string.start_jam_cta);
+            startJamming.setHint(newHint + " " + filename);
+            startJamming.setEnabled(true);
+        } else{
+            Log.e("uninitialized variable", "playFilePath does not have the " +
+                    "expected contents: " + playFilePath);
+        }
     }
 
     @Override
