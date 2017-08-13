@@ -68,7 +68,13 @@ public class CountdownPlayActivity extends Activity {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean
                 fromUser){
             if(fromUser){
+                Log.d("seekbar", "progress changed from user is now " +
+                        progress);
                 countdownPlayer.getMediaPlayer().seekTo(progress);
+                //seekBar.setProgress(progress);
+            } else{
+                Log.d("seekbar", "progress changed programatically is now " +
+                        progress);
             }
         }
 
