@@ -1,5 +1,7 @@
 # Museician
 
+[Get this on Google Play!](https://play.google.com/store/apps/details?id=net.skytreader.museician&hl=en)
+
 Citing related repos compels me to mention [this one](https://github.com/skytreader/museic).
 
 Why the name? Because this is museic _for Android_. Now "museic" hast its own
