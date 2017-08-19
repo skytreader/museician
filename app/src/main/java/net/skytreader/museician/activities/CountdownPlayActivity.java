@@ -249,7 +249,7 @@ public class CountdownPlayActivity extends Activity {
                 Context c = getApplicationContext();
                 String msg = c.getResources().getString
                         (R.string.file_not_found);
-                Toast.makeText(c, msg, Toast.LENGTH_SHORT);
+                Toast.makeText(c, msg, Toast.LENGTH_SHORT).show();
             }
         }
     }
