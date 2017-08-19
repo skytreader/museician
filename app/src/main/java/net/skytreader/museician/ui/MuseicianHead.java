@@ -2,9 +2,8 @@ package net.skytreader.museician.ui;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.icu.text.DisplayContext;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.support.v7.widget.AppCompatTextView;
 
 import net.skytreader.museician.appstractions.FontCache;
 
@@ -12,7 +11,7 @@ import net.skytreader.museician.appstractions.FontCache;
  * Created by chad on 7/9/17.
  */
 
-public class MuseicianHead extends TextView {
+public class MuseicianHead extends AppCompatTextView {
 
     public MuseicianHead(Context c, AttributeSet attrs){
         super(c, attrs);
