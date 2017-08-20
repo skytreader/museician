@@ -10,6 +10,7 @@ android:
         - sys-img-armeabi-v7a-android-25
         - sys-img-x86_64-android-25
 before_script:
+    - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-25
     - android list sdk --extended --no-ui --all
     - android list targets
     - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
