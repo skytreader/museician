@@ -8,6 +8,7 @@ android:
         - android-25
         - android-sdk-license-.+
         - sys-img-armeabi-v7a-android-25
+        - sys-img-x86_64-android-25
 before_script:
     - android list sdk --extended --no-ui --all
     - android list targets
