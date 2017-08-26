@@ -103,25 +103,32 @@ public class CountdownPlayActivity extends Activity {
                 .HOME_COUNTDOWN_SECONDS, 4);
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
-        countdownPlayer = new CountdownPlayer(this, playFilePath);
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        SharedPreferences sp = getSharedPreferences(getString(R.string
-                .shared_preferences_key), Context.MODE_PRIVATE);
-        appKVStore = new KVStore(sp);
-        recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
-                .kv_recent_files));
+        try {
+            countdownPlayer = new CountdownPlayer(this, playFilePath);
+            seekBar = (SeekBar) findViewById(R.id.seekBar);
+            SharedPreferences sp = getSharedPreferences(getString(R.string
+                    .shared_preferences_key), Context.MODE_PRIVATE);
+            appKVStore = new KVStore(sp);
+            recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
+                    .kv_recent_files));
 
-        playBtn = (ImageButton) findViewById(R.id.playBtn);
-        pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
-        stopBtn = (ImageButton) findViewById(R.id.stopBtn);
-        backBtn = (ImageButton) findViewById(R.id.backBtn);
-        forwardBtn = (ImageButton) findViewById(R.id.forwardBtn);
+            playBtn = (ImageButton) findViewById(R.id.playBtn);
+            pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
+            stopBtn = (ImageButton) findViewById(R.id.stopBtn);
+            backBtn = (ImageButton) findViewById(R.id.backBtn);
+            forwardBtn = (ImageButton) findViewById(R.id.forwardBtn);
 
-        Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
-        statusUpdateElement.setTypeface(led16Seg);
+            Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
 
-        setupSeekbar();
-        beginCountdown();
+            statusUpdateElement.setTypeface(led16Seg);
+
+            setupSeekbar();
+            beginCountdown();
+        } catch(IOException ioe){
+            Log.e("CountdownPlayActivity", ioe.toString());
+            String msg = getResources().getString(R.string.file_not_found);
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        }
     }
 
     // FIXME find a more idiomatic way of writing this.

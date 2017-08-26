@@ -32,13 +32,15 @@ public class CountdownPlayer {
 
     private PlayWhenPrepared playPreparedListener = new PlayWhenPrepared();
 
-    public CountdownPlayer(Activity a, String filepath) {
+    public CountdownPlayer(Activity a, String filepath) throws IOException {
         activity = a;
         if(mp == null) {
             Log.d("constructor", "about to create a new MediaPlayer instance");
             mp = MediaPlayer.create(activity, Uri.parse(filepath));
             mp.setLooping(false);
             mp.setVolume(100F, 100F);
+        } else{
+            reset(filepath);
         }
     }
 

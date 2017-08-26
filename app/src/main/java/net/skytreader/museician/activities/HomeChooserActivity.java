@@ -137,8 +137,6 @@ public class HomeChooserActivity extends Activity {
         }
     }
 
-
-
     private void saveLastDirectory(String lastDirectory) {
         kvstore.set(getString(R.string.kv_last_directory), lastDirectory);
     }
@@ -151,7 +149,7 @@ public class HomeChooserActivity extends Activity {
                 resultCode == RESULT_OK) {
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
-            // FIXME Optimization: filepath is splitted twice (once more in
+            // FIXME Optimization: filepath is split twice (once more in
             // refreshJamButtonHint).
             String[] filepathComponents = filepath.split("/");
             String lastDirectory = Utils.extractFilepath(filepathComponents);
@@ -201,6 +199,7 @@ public class HomeChooserActivity extends Activity {
     }
 
     public void startJamming(View view) {
+        // TODO Could you name a file with all whitespace?
         playFilePath = playFilePath.trim();
         if (playFilePath == null || playFilePath.length() <= 0) {
             throw new RuntimeException("startJamming called while " +
