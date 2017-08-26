@@ -41,6 +41,9 @@ public class CountdownPlayActivity extends Activity {
     private ImageButton backBtn;
     private ImageButton forwardBtn;
 
+    /**
+     * The number of ticks for countdown.
+     */
     private int countTime;
     private int displayCount;
     private long intervalMillis;
@@ -48,6 +51,13 @@ public class CountdownPlayActivity extends Activity {
     private LRUPriorityQueue recentFiles;
     private boolean isCountdownOngoing = false;
     private boolean isStoppedFromFileLoad = false;
+
+    /**
+     * Since looks like that it could happen that a track's currentPosition
+     * won't ever reach its duration, anything less than this is considered
+     * "done".
+     */
+    private final int END_DELTA_MS = 1000;
 
     private Handler seekUpdateHandler = new Handler();
     private Runnable uiUpdateRunner = new Runnable(){
@@ -150,7 +160,12 @@ public class CountdownPlayActivity extends Activity {
     }
 
     public void pressPlay(View v){
-        if(isStoppedFromFileLoad){
+        // TODO probably want to refactor getDuration() since that won't
+        // change much.
+        MediaPlayer mp = countdownPlayer.getMediaPlayer();
+        int currentPosition = mp.getCurrentPosition();
+        int duration = mp.getDuration();
+        if(isStoppedFromFileLoad || (duration - currentPosition) <= END_DELTA_MS){
             beginCountdown();
         } else {
             countdownPlayer.play();
