@@ -10,8 +10,12 @@ import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Mostly a wrapper to MediaPlayer.
- * <p>
+ * Mostly a wrapper to MediaPlayer. Note that this class uses Singleton oddly,
+ * mostly because it is not expected to be used in a multithreaded manner so we
+ * cut off some slack. The MediaPlayer object is static and the constructor
+ * (as well as the other methods) work to ensure that there is only one
+ * canonical MediaPlayer at any given time.
+ *
  * Created by chad on 6/4/17.
  */
 
