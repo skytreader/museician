@@ -69,9 +69,15 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools">
@@ -86,5 +92,5 @@
             android:layout_height="wrap_content"
             android:id="@+id/recentFilesList"></ListView>
    </LinearLayout>
-
+</RelativeLayout>
 </LinearLayout>
