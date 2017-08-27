@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:padding="88dp">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools">
+        <include layout="@layout/app_header" android:id="@+id/appHeaderBar"></include>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/greeting_initial_instructions" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/greetingSpam"
+            android:hint="@string/greeting_instructions" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/countdown_prompt" />
+
+        <EditText
+            android:id="@+id/countdownSeconds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="@string/countdown_prompt"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="176dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="@string/choose_file_cta"
+            android:onClick="chooseJamSong"
+            android:id="@+id/chooseJamSong"
+            />
+
+        <Button
+            android:id="@+id/startJamming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="@string/pending_jam"
+            android:onClick="startJamming"
+            android:enabled="false"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recentFilesLabel"
+            android:hint="@string/recent_files"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recentFilesList"></ListView>
+   </LinearLayout>
+
+</LinearLayout>
