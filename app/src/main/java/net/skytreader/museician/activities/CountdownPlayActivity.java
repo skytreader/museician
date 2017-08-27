@@ -137,7 +137,7 @@ public class CountdownPlayActivity extends Activity {
         } catch(IOException ioe){
             Log.e("CountdownPlayActivity", ioe.toString());
             String msg = getResources().getString(R.string.file_not_found);
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 
