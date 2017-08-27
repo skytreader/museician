@@ -8,14 +8,20 @@
         xmlns:tools="http://schemas.android.com/tools"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
-        android:padding="88dp">
+        android:padding="44dp">
 
-    <LinearLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_weight="0.5"
         xmlns:tools="http://schemas.android.com/tools">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            xmlns:tools="http://schemas.android.com/tools">
         <include layout="@layout/app_header" android:id="@+id/appHeaderBar"></include>
         <TextView
             android:layout_width="wrap_content"
@@ -60,7 +66,8 @@
             android:onClick="startJamming"
             android:enabled="false"
             />
-    </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
