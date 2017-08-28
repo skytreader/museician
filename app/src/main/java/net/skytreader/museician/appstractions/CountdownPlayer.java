@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -77,7 +78,8 @@ public class CountdownPlayer {
             long secsDisplay = secsLeft % 60;
             secsDisplay = secsDisplay < 0 ? 0 : secsDisplay;
 
-            lastDisplaySnapshot = String.format("%02d:%02d", minDisplay,
+            lastDisplaySnapshot = String.format(Locale.US, "%02d:%02d",
+                    minDisplay,
                     secsDisplay);
         }
 
