@@ -50,7 +50,6 @@ public class CountdownPlayActivity extends Activity {
     private KVStore appKVStore;
     private LRUPriorityQueue recentFiles;
     private boolean isCountdownOngoing = false;
-    private boolean isStoppedFromFileLoad = false;
 
     /**
      * Since looks like that it could happen that a track's currentPosition
@@ -160,16 +159,7 @@ public class CountdownPlayActivity extends Activity {
     }
 
     public void pressPlay(View v){
-        // TODO probably want to refactor getDuration() since that won't
-        // change much.
-        MediaPlayer mp = countdownPlayer.getMediaPlayer();
-        int currentPosition = mp.getCurrentPosition();
-        int duration = mp.getDuration();
-        if(isStoppedFromFileLoad || (duration - currentPosition) <= END_DELTA_MS){
-            beginCountdown();
-        } else {
-            countdownPlayer.play();
-        }
+        countdownPlayer.play();
     }
 
     public void pressPause(View v){
@@ -178,7 +168,6 @@ public class CountdownPlayActivity extends Activity {
 
     public void pressStop(View v){
         countdownPlayer.toggleStop();
-        isStoppedFromFileLoad = false;
     }
 
     public void pressBack(View v) {
@@ -253,7 +242,6 @@ public class CountdownPlayActivity extends Activity {
         if (requestCode == PermissionsRequest.FILE_READ &&
                 resultCode == RESULT_OK) {
             countdownPlayer.toggleStop();
-            isStoppedFromFileLoad = true;
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
