@@ -15,7 +15,7 @@
         android:layout_below="@+id/appHeader"
         android:textAlignment="center"
         android:textColor="@color/ledBlue"
-        android:textSize="48dp"/>
+        android:textSize="48sp"/>
 
     <SeekBar
         android:id="@+id/seekBar"
