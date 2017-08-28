@@ -51,13 +51,6 @@ public class CountdownPlayActivity extends Activity {
     private LRUPriorityQueue recentFiles;
     private boolean isCountdownOngoing = false;
 
-    /**
-     * Since looks like that it could happen that a track's currentPosition
-     * won't ever reach its duration, anything less than this is considered
-     * "done".
-     */
-    private final int END_DELTA_MS = 1000;
-
     private Handler seekUpdateHandler = new Handler();
     private Runnable uiUpdateRunner = new Runnable(){
         @Override
