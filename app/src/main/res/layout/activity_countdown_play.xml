@@ -38,6 +38,7 @@
         android:layout_gravity="center">
 
         <ImageButton
+            android:contentDescription="@string/cd_back"
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
             android:onClick="pressBack"/>
 
         <ImageButton
+            android:contentDescription="@string/cd_stop"
             android:id="@+id/stopBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
             android:onClick="pressStop"/>
 
         <ImageButton
+            android:contentDescription="@string/cd_play"
             android:id="@+id/playBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,6 +68,7 @@
             android:onClick="pressPlay"/>
 
         <ImageButton
+            android:contentDescription="@string/cd_pause"
             android:id="@+id/pauseBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,6 +78,7 @@
             android:onClick="pressPause"/>
 
         <ImageButton
+            android:contentDescription="@string/cd_forward"
             android:id="@+id/forwardBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
