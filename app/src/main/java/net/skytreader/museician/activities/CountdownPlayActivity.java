@@ -108,15 +108,6 @@ public class CountdownPlayActivity extends Activity {
         try {
             countdownPlayer = new CountdownPlayer(this, playFilePath);
             seekBar = (SeekBar) findViewById(R.id.seekBar);
-            SharedPreferences sp = getSharedPreferences(getString(R.string
-                    .shared_preferences_key), Context.MODE_PRIVATE);
-            appKVStore = new KVStore(sp);
-            recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
-                    .kv_recent_files));
-
-            Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
-
-            statusUpdateElement.setTypeface(led16Seg);
 
             setupSeekbar();
             beginCountdown();
@@ -125,6 +116,15 @@ public class CountdownPlayActivity extends Activity {
             String msg = getResources().getString(R.string.file_not_found);
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
+        SharedPreferences sp = getSharedPreferences(getString(R.string
+                .shared_preferences_key), Context.MODE_PRIVATE);
+        appKVStore = new KVStore(sp);
+        recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
+                .kv_recent_files));
+
+        Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
+
+        statusUpdateElement.setTypeface(led16Seg);
         playBtn = (ImageButton) findViewById(R.id.playBtn);
         pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
         stopBtn = (ImageButton) findViewById(R.id.stopBtn);
