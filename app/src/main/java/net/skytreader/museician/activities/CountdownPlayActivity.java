@@ -105,9 +105,9 @@ public class CountdownPlayActivity extends Activity {
                 .HOME_COUNTDOWN_SECONDS, 4);
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
         try {
             countdownPlayer = new CountdownPlayer(this, playFilePath);
-            seekBar = (SeekBar) findViewById(R.id.seekBar);
 
             setupSeekbar();
             beginCountdown();
@@ -239,7 +239,9 @@ public class CountdownPlayActivity extends Activity {
 
         if (requestCode == PermissionsRequest.FILE_READ &&
                 resultCode == RESULT_OK) {
-            countdownPlayer.toggleStop();
+            if(countdownPlayer != null) {
+                countdownPlayer.toggleStop();
+            }
             String filepath = data.getStringExtra(FilePickerActivity
                     .RESULT_FILE_PATH);
             String[] filepathComponents = filepath.split("/");
@@ -247,7 +249,11 @@ public class CountdownPlayActivity extends Activity {
             String lastDirectory = Utils.extractFilepath(filepathComponents);
 
             try{
-                countdownPlayer.reset(filepath);
+                if(countdownPlayer != null) {
+                    countdownPlayer.reset(filepath);
+                } else{
+                    countdownPlayer = new CountdownPlayer(this, filepath);
+                }
                 appKVStore.set(getString(R.string.kv_last_directory), lastDirectory);
                 setNowPlayingText(filename);
 
