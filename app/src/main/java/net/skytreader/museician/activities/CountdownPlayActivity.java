@@ -114,12 +114,6 @@ public class CountdownPlayActivity extends Activity {
             recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
                     .kv_recent_files));
 
-            playBtn = (ImageButton) findViewById(R.id.playBtn);
-            pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
-            stopBtn = (ImageButton) findViewById(R.id.stopBtn);
-            backBtn = (ImageButton) findViewById(R.id.backBtn);
-            forwardBtn = (ImageButton) findViewById(R.id.forwardBtn);
-
             Typeface led16Seg = FontCache.get("fonts/led16sgmnt-Regular.ttf", this);
 
             statusUpdateElement.setTypeface(led16Seg);
@@ -131,6 +125,12 @@ public class CountdownPlayActivity extends Activity {
             String msg = getResources().getString(R.string.file_not_found);
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
+        playBtn = (ImageButton) findViewById(R.id.playBtn);
+        pauseBtn = (ImageButton) findViewById(R.id.pauseBtn);
+        stopBtn = (ImageButton) findViewById(R.id.stopBtn);
+        backBtn = (ImageButton) findViewById(R.id.backBtn);
+        forwardBtn = (ImageButton) findViewById(R.id.forwardBtn);
+        deriveButtonState();
     }
 
     // FIXME find a more idiomatic way of writing this.
@@ -143,12 +143,17 @@ public class CountdownPlayActivity extends Activity {
     }
 
     private void deriveButtonState(){
-        MediaPlayer mp = countdownPlayer.getMediaPlayer();
-        playBtn.setEnabled(!mp.isPlaying());
-        pauseBtn.setEnabled(mp.isPlaying());
-        stopBtn.setEnabled(mp.isPlaying());
-        backBtn.setEnabled(mp.isPlaying());
-        forwardBtn.setEnabled(mp.isPlaying());
+        boolean isCountdownPlayerNotNull = countdownPlayer != null;
+        if(isCountdownPlayerNotNull) {
+            MediaPlayer mp = countdownPlayer.getMediaPlayer();
+            playBtn.setEnabled(!mp.isPlaying());
+            pauseBtn.setEnabled(mp.isPlaying());
+            stopBtn.setEnabled(mp.isPlaying());
+            backBtn.setEnabled(mp.isPlaying());
+            forwardBtn.setEnabled(mp.isPlaying());
+        } else{
+            disableAllButtons();
+        }
     }
 
     public void pressPlay(View v){
