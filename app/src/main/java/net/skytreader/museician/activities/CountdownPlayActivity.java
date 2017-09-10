@@ -157,7 +157,7 @@ public class CountdownPlayActivity extends Activity {
     }
 
     public void pressPlay(View v){
-        countdownPlayer.play();
+        beginCountdown();
     }
 
     public void pressPause(View v){
@@ -191,6 +191,9 @@ public class CountdownPlayActivity extends Activity {
         seekUpdateHandler.postDelayed(uiUpdateRunner, 100);
     }
 
+    /**
+     * Counts down _AND_ plays after the countdown is done.
+     */
     private void beginCountdown() {
         disableAllButtons();
         countdownPlayer.toggleStop();
