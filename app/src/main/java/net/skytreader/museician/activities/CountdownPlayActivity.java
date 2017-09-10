@@ -105,18 +105,7 @@ public class CountdownPlayActivity extends Activity {
                 .HOME_COUNTDOWN_SECONDS, 4);
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        try {
-            countdownPlayer = new CountdownPlayer(this, playFilePath);
-
-            setupSeekbar();
-            beginCountdown();
-        } catch(IOException ioe){
-            Log.e("CountdownPlayActivity", ioe.toString());
-            String msg = getResources().getString(R.string.file_not_found);
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-        SharedPreferences sp = getSharedPreferences(getString(R.string
+        seekBar = (SeekBar) findViewById(R.id.seekBar); SharedPreferences sp = getSharedPreferences(getString(R.string
                 .shared_preferences_key), Context.MODE_PRIVATE);
         appKVStore = new KVStore(sp);
         recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
@@ -130,6 +119,17 @@ public class CountdownPlayActivity extends Activity {
         stopBtn = (ImageButton) findViewById(R.id.stopBtn);
         backBtn = (ImageButton) findViewById(R.id.backBtn);
         forwardBtn = (ImageButton) findViewById(R.id.forwardBtn);
+        try {
+            countdownPlayer = new CountdownPlayer(this, playFilePath);
+
+            setupSeekbar();
+            beginCountdown();
+        } catch(IOException ioe){
+            Log.e("CountdownPlayActivity", ioe.toString());
+            String msg = getResources().getString(R.string.file_not_found);
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+
         deriveButtonState();
     }
 
