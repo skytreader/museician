@@ -197,7 +197,8 @@ public class HomeChooserActivity extends Activity {
     }
 
     public void startJamming(View view) {
-        // TODO Could you name a file with all whitespace?
+        // Given that we filter for .mp3 files, untrimmed this should never
+        // ever be all whitespace.
         playFilePath = playFilePath.trim();
         if (playFilePath == null || playFilePath.length() <= 0) {
             throw new RuntimeException("startJamming called while " +
