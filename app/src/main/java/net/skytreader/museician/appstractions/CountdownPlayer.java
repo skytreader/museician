@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.Locale;
@@ -39,6 +40,9 @@ public class CountdownPlayer {
 
     public CountdownPlayer(Activity a, String filepath) throws IOException {
         activity = a;
+        if(!(new File(filepath)).exists()){
+            throw new IOException("Indicated file does not exist.");
+        }
         if(mp == null) {
             Log.d("constructor", "about to create a new MediaPlayer instance");
             mp = MediaPlayer.create(activity, Uri.parse(filepath));
