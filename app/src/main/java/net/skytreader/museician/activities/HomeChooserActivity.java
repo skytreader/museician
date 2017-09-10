@@ -165,8 +165,6 @@ public class HomeChooserActivity extends Activity {
      * the text hint based on the contents of playFilePath.
      */
     private void refreshJamButtonHint(){
-        // NOTE this state has never been observed but is nonetheless checked
-        // for preemptive measures.
         if(playFilePath != null && playFilePath.trim().length() != 0) {
             String filename = Utils.extractFilename(playFilePath.split("/"));
             Button startJamming = (Button) findViewById(R.id.startJamming);
