@@ -54,7 +54,7 @@ public class Utils {
         metadataRetriever.setDataSource(filepath);
         Map<String, String> metadata = new HashMap<>();
         // TODO Find a way to type/enumerate the keys of this Map.
-        metadata.put("filepath", filepath);
+        metadata.put("filename", Utils.extractFilename(filepath.split("/")));
         // FIXME Handle blank metadata items.
         metadata.put("titleArtist", metadataRetriever.extractMetadata
                 (MediaMetadataRetriever.METADATA_KEY_TITLE) + " - " +

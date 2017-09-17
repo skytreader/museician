@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="4pt"
-          android:textSize="6pt">
-
-</TextView>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="4pt"
+              android:paddingTop="4pt"
+              android:textSize="6pt"
+              android:id="@+id/mainText">
+    </TextView>
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="4pt"
+              android:paddingLeft="4pt"
+              android:paddingBottom="2pt"
+              android:layout_below="@+id/mainText"
+              android:id="@+id/subText">
+    </TextView>
+</RelativeLayout>

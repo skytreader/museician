@@ -127,9 +127,9 @@ public class HomeChooserActivity extends Activity {
             listDisplayData.add(Utils.getMp3Metadata(path));
         }
         SimpleAdapter simple = new SimpleAdapter(this, listDisplayData,
-                android.R.layout.simple_list_item_2,
-                new String[]{"titleArtist", "filepath"},
-                new int[]{android.R.id.text1, android.R.id.text2});
+                R.layout.small_dark_list,
+                new String[]{"titleArtist", "filename"},
+                new int[]{R.id.mainText, R.id.subText});
         ArrayAdapter<String> adapter = new ArrayAdapter(this, R.layout.small_dark_list,
                 recentFilenames);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
