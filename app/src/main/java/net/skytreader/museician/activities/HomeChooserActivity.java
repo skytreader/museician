@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -25,6 +26,10 @@ import net.skytreader.museician.appstractions.LRUPriorityQueue;
 import net.skytreader.museician.appstractions.PermissionsRequest;
 import net.skytreader.museician.R;
 import net.skytreader.museician.appstractions.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class HomeChooserActivity extends Activity {
 
@@ -116,10 +121,19 @@ public class HomeChooserActivity extends Activity {
             recentFilenames[i] = Utils.extractFilename(recentFilepaths[i]
                     .split("/"));
         }
+        List<Map<String, String>> listDisplayData = new ArrayList<>
+                (recentFilepaths.length);
+        for(String path: recentFilepaths){
+            listDisplayData.add(Utils.getMp3Metadata(path));
+        }
+        SimpleAdapter simple = new SimpleAdapter(this, listDisplayData,
+                android.R.layout.simple_list_item_2,
+                new String[]{"titleArtist", "filepath"},
+                new int[]{android.R.id.text1, android.R.id.text2});
         ArrayAdapter<String> adapter = new ArrayAdapter(this, R.layout.small_dark_list,
                 recentFilenames);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
-        recentFiles.setAdapter(adapter);
+        recentFiles.setAdapter(simple);
     }
 
     private void checkAndAskReadingPermission(){

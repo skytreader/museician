@@ -1,6 +1,7 @@
 package net.skytreader.museician.appstractions;
 
 import android.app.Activity;
+import android.media.MediaMetadataRetriever;
 import android.text.TextUtils;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
@@ -8,6 +9,8 @@ import com.nbsp.materialfilepicker.MaterialFilePicker;
 import net.skytreader.museician.appstractions.PermissionsRequest;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -44,5 +47,19 @@ public class Utils {
         return TextUtils.join("/",
                 Arrays.copyOf(filepathComponents, filepathComponents.length -
                         1));
+    }
+
+    public static Map<String, String> getMp3Metadata(String filepath){
+        MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
+        metadataRetriever.setDataSource(filepath);
+        Map<String, String> metadata = new HashMap<>();
+        // TODO Find a way to type/enumerate the keys of this Map.
+        metadata.put("filepath", filepath);
+        // FIXME Handle blank metadata items.
+        metadata.put("titleArtist", metadataRetriever.extractMetadata
+                (MediaMetadataRetriever.METADATA_KEY_TITLE) + " - " +
+                metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+
+        return metadata;
     }
 }
