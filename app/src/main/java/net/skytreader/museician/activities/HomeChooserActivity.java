@@ -124,7 +124,7 @@ public class HomeChooserActivity extends Activity {
         List<Map<String, String>> listDisplayData = new ArrayList<>
                 (recentFilepaths.length);
         for(String path: recentFilepaths){
-            listDisplayData.add(Utils.getMp3Metadata(path));
+            listDisplayData.add(Utils.getMp3Metadata(path, getApplicationContext()));
         }
         SimpleAdapter simple = new SimpleAdapter(this, listDisplayData,
                 R.layout.small_dark_list,

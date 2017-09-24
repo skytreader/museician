@@ -23,4 +23,6 @@
     <string name="cd_pause">Pause</string>
     <string name="cd_play">Play</string>
     <string name="cd_stop">Stop</string>
+    <string name="default_noartist">Unknown Artist</string>
+    <string name="default_notitle">Unknown Title</string>
 </resources>
