@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -132,8 +131,6 @@ public class HomeChooserActivity extends Activity {
                 new String[]{RetrievedMetadata.TITLE_ARTIST.getKey(),
                         RetrievedMetadata.FILENAME.getKey()},
                 new int[]{R.id.mainText, R.id.subText});
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, R.layout.small_dark_list,
-                recentFilenames);
         ListView recentFiles = (ListView) findViewById(R.id.recentFilesList);
         recentFiles.setAdapter(simple);
     }
