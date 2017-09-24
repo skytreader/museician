@@ -26,6 +26,7 @@ import net.skytreader.museician.appstractions.LRUPriorityQueue;
 import net.skytreader.museician.appstractions.PermissionsRequest;
 import net.skytreader.museician.R;
 import net.skytreader.museician.appstractions.Utils;
+import net.skytreader.museician.appstractions.Utils.RetrievedMetadata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +129,8 @@ public class HomeChooserActivity extends Activity {
         }
         SimpleAdapter simple = new SimpleAdapter(this, listDisplayData,
                 R.layout.small_dark_list,
-                new String[]{"titleArtist", "filename"},
+                new String[]{RetrievedMetadata.TITLE_ARTIST.getKey(),
+                        RetrievedMetadata.FILENAME.getKey()},
                 new int[]{R.id.mainText, R.id.subText});
         ArrayAdapter<String> adapter = new ArrayAdapter(this, R.layout.small_dark_list,
                 recentFilenames);

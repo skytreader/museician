@@ -22,6 +22,23 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
+    /**
+     * Enumerates the keys the fields that will be retrieved from MP3 files.
+     */
+    public enum RetrievedMetadata{
+        FILENAME("filename"), TITLE_ARTIST("titleArtist");
+
+        private final String key;
+
+        RetrievedMetadata(String key){
+            this.key = key;
+        }
+
+        public String getKey(){
+            return key;
+        }
+    }
+
     public static Pattern MP3_FILES = Pattern.compile(".*\\.mp3");
 
     /**
@@ -49,14 +66,22 @@ public class Utils {
                         1));
     }
 
+    /**
+     * Get metadata details from the MP3 file described in the given filepath.
+     *
+     * @param filepath
+     * @return A Map whose keys are as enumerated in the Utils.RetrievedMetadata
+     * enum.
+     */
     public static Map<String, String> getMp3Metadata(String filepath){
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
         metadataRetriever.setDataSource(filepath);
         Map<String, String> metadata = new HashMap<>();
-        // TODO Find a way to type/enumerate the keys of this Map.
-        metadata.put("filename", Utils.extractFilename(filepath.split("/")));
+        metadata.put(RetrievedMetadata.FILENAME.getKey(), Utils.extractFilename
+                (filepath.split("/")));
         // FIXME Handle blank metadata items.
-        metadata.put("titleArtist", metadataRetriever.extractMetadata
+        metadata.put(RetrievedMetadata.TITLE_ARTIST.getKey(),
+                metadataRetriever.extractMetadata
                 (MediaMetadataRetriever.METADATA_KEY_TITLE) + " - " +
                 metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
 
