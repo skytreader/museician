@@ -55,9 +55,12 @@ public class CountdownPlayActivity extends Activity {
     private Runnable uiUpdateRunner = new Runnable(){
         @Override
         public void run() {
-            seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
+            if(countdownPlayer.getMediaPlayer().isPlaying()) {
+                Log.i("callTrace", "approximately setting progress to " +
+                        countdownPlayer.getMediaPlayer().getCurrentPosition());
+                seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
+            }
             seekUpdateHandler.postDelayed(this, 100);
-
             if(!isCountdownOngoing) {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
                 deriveButtonState();
@@ -94,6 +97,7 @@ public class CountdownPlayActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("callTrace", "CountdownPlayActivity.onCreate called");
         setContentView(R.layout.activity_countdown_play);
         Intent i = getIntent();
         String playFilePath = i.getStringExtra(HomeChooserActivity
@@ -105,7 +109,8 @@ public class CountdownPlayActivity extends Activity {
                 .HOME_COUNTDOWN_SECONDS, 4);
         statusUpdateElement = (TextView) findViewById(R.id.statusScreen);
         intervalMillis = 1000L;
-        seekBar = (SeekBar) findViewById(R.id.seekBar); SharedPreferences sp = getSharedPreferences(getString(R.string
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        SharedPreferences sp = getSharedPreferences(getString(R.string
                 .shared_preferences_key), Context.MODE_PRIVATE);
         appKVStore = new KVStore(sp);
         recentFiles = new LRUPriorityQueue(sp, 4, getString(R.string
@@ -186,6 +191,7 @@ public class CountdownPlayActivity extends Activity {
     private void setupSeekbar(){
         seekBar.setOnSeekBarChangeListener(new SeekbarMediaSeeker());
         MediaPlayer mp = countdownPlayer.getMediaPlayer();
+        Log.i("callTrace", "mp current position " + mp.getCurrentPosition());
         seekBar.setMax(mp.getDuration());
         seekBar.setProgress(mp.getCurrentPosition());
         seekUpdateHandler.postDelayed(uiUpdateRunner, 100);
