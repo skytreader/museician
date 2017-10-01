@@ -29,13 +29,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/seekBar"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/buttonBay"
         android:layout_below="@+id/nowPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center">
+        android:layout_centerInParent="true">
 
         <ImageButton
             android:contentDescription="@string/cd_back"
@@ -55,6 +54,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/stop"
+            android:layout_toRightOf="@+id/backBtn"
             android:onClick="pressStop"/>
 
         <ImageButton
@@ -65,6 +65,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/play"
+            android:layout_toRightOf="@+id/stopBtn"
             android:onClick="pressPlay"/>
 
         <ImageButton
@@ -75,6 +76,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/pause"
+            android:layout_toRightOf="@+id/playBtn"
             android:onClick="pressPause"/>
 
         <ImageButton
@@ -85,9 +87,10 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@drawable/forward"
+            android:layout_toRightOf="@+id/pauseBtn"
             android:onClick="pressForward"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/chooseJamSong"
