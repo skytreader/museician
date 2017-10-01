@@ -56,15 +56,15 @@ public class CountdownPlayActivity extends Activity {
         @Override
         public void run() {
             if(countdownPlayer.getMediaPlayer().isPlaying()) {
-                Log.i("callTrace", "approximately setting progress to " +
+                Log.d("callTrace", "approximately setting progress to " +
                         countdownPlayer.getMediaPlayer().getCurrentPosition());
                 seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
             }
-            seekUpdateHandler.postDelayed(this, 100);
             if(!isCountdownOngoing) {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
                 deriveButtonState();
             }
+            seekUpdateHandler.postDelayed(this, 100);
         }
     };
 
@@ -193,6 +193,7 @@ public class CountdownPlayActivity extends Activity {
         MediaPlayer mp = countdownPlayer.getMediaPlayer();
         Log.i("callTrace", "mp current position " + mp.getCurrentPosition());
         seekBar.setMax(mp.getDuration());
+        Log.i("callTrace", "max set to " + mp.getDuration());
         seekBar.setProgress(mp.getCurrentPosition());
         seekUpdateHandler.postDelayed(uiUpdateRunner, 100);
     }
