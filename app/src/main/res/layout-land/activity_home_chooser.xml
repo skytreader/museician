@@ -15,30 +15,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
         <include layout="@layout/app_header" android:id="@+id/appHeaderBar"></include>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/appHeaderBar"
+            android:id="@+id/greetings"
             android:hint="@string/greeting_initial_instructions" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/greetingSpam"
+            android:layout_below="@+id/greetings"
             android:hint="@string/greeting_instructions" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/greetingSpam"
+            android:id="@+id/countdownPrompt"
             android:hint="@string/countdown_prompt" />
 
         <EditText
             android:id="@+id/countdownSeconds"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/countdownPrompt"
             android:ems="10"
             android:inputType="number"
             android:hint="@string/countdown_prompt"
@@ -52,10 +54,11 @@
             android:hint="@string/choose_file_cta"
             android:onClick="chooseJamSong"
             android:id="@+id/chooseJamSong"
-            />
+            android:layout_below="@+id/countdownSeconds"/>
 
         <Button
             android:id="@+id/startJamming"
+            android:layout_below="@+id/chooseJamSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -63,14 +66,15 @@
             android:onClick="startJamming"
             android:enabled="false"
             />
-        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:layout_marginLeft="24dp">
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
