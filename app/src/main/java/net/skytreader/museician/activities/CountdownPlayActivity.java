@@ -76,14 +76,15 @@ public class CountdownPlayActivity extends Activity {
                 seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
             }
             if(!isCountdownOngoing) {
-                statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
-                deriveButtonState();
+                statusUpdateElement.setText(countdownPlayer
+                        .getTimedownDisplay());
             }
             if(isRunning || isCountdownOngoing) {
                 seekUpdateHandler.postDelayed(this, 100);
             } else{
                 Log.d("termination", this + " is stopping now.");
             }
+            deriveButtonState();
         }
     }
 
