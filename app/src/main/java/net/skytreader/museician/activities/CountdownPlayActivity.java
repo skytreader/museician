@@ -52,9 +52,20 @@ public class CountdownPlayActivity extends Activity {
     private boolean isCountdownOngoing = false;
 
     private static Handler seekUpdateHandler = new Handler();
-    private Runnable uiUpdateRunner = new UiUpdateRunnable();
+    private UiUpdateRunnable uiUpdateRunner = new UiUpdateRunnable();
 
     private class UiUpdateRunnable implements Runnable{
+
+        private boolean isRunning = true;
+
+        /**
+         * Call this on Activity pause so that the current runnable
+         * terminates itself out of existence.
+         */
+        public void stop(){
+            isRunning = false;
+        }
+
         @Override
         public void run() {
             Log.i(this.toString(), "Thread updating");
@@ -67,7 +78,11 @@ public class CountdownPlayActivity extends Activity {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
                 deriveButtonState();
             }
-            seekUpdateHandler.postDelayed(this, 100);
+            if(isRunning) {
+                seekUpdateHandler.postDelayed(this, 100);
+            } else{
+                Log.d("termination", this + " is stopping now.");
+            }
         }
     }
 
@@ -139,6 +154,12 @@ public class CountdownPlayActivity extends Activity {
         }
 
         deriveButtonState();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        uiUpdateRunner.stop();
     }
 
     // FIXME find a more idiomatic way of writing this.
