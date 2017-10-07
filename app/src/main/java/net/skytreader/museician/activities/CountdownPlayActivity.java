@@ -51,10 +51,13 @@ public class CountdownPlayActivity extends Activity {
     private LRUPriorityQueue recentFiles;
     private boolean isCountdownOngoing = false;
 
-    private Handler seekUpdateHandler = new Handler();
-    private Runnable uiUpdateRunner = new Runnable(){
+    private static Handler seekUpdateHandler = new Handler();
+    private Runnable uiUpdateRunner = new UiUpdateRunnable();
+
+    private class UiUpdateRunnable implements Runnable{
         @Override
         public void run() {
+            Log.i(this.toString(), "Thread updating");
             if(countdownPlayer.getMediaPlayer().isPlaying()) {
                 Log.d("callTrace", "approximately setting progress to " +
                         countdownPlayer.getMediaPlayer().getCurrentPosition());
@@ -66,7 +69,7 @@ public class CountdownPlayActivity extends Activity {
             }
             seekUpdateHandler.postDelayed(this, 100);
         }
-    };
+    }
 
     private class SeekbarMediaSeeker implements SeekBar.OnSeekBarChangeListener{
         @Override
