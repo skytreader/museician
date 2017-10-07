@@ -79,7 +79,7 @@ public class CountdownPlayActivity extends Activity {
                 statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
                 deriveButtonState();
             }
-            if(isRunning) {
+            if(isRunning || isCountdownOngoing) {
                 seekUpdateHandler.postDelayed(this, 100);
             } else{
                 Log.d("termination", this + " is stopping now.");
