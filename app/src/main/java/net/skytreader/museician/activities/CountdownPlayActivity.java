@@ -69,6 +69,7 @@ public class CountdownPlayActivity extends Activity {
         @Override
         public void run() {
             Log.i(this.toString(), "Thread updating");
+            seekBar.setMax(countdownPlayer.getMediaPlayer().getDuration());
             if(countdownPlayer.getMediaPlayer().isPlaying()) {
                 Log.d("callTrace", "approximately setting progress to " +
                         countdownPlayer.getMediaPlayer().getCurrentPosition());
@@ -218,6 +219,7 @@ public class CountdownPlayActivity extends Activity {
         Log.i("callTrace", "mp current position " + mp.getCurrentPosition());
         seekBar.setMax(mp.getDuration());
         Log.i("callTrace", "max set to " + mp.getDuration());
+        Log.i("callTrace", "max set verification " + seekBar.getMax());
         seekBar.setProgress(mp.getCurrentPosition());
         seekUpdateHandler.postDelayed(uiUpdateRunner, 100);
     }

@@ -32,7 +32,8 @@ public class CountdownPlayer {
     private class PlayWhenPrepared implements MediaPlayer.OnPreparedListener {
         public void onPrepared(MediaPlayer mp) {
             CountdownPlayer.this.isMediaPlayerReady = true;
-            Log.i("PlayWhenPrepared", "media player should now be ready.");
+            Log.i("PlayWhenPrepared", "media player should now be ready. " +
+                    "Duration: " + CountdownPlayer.this.mp.getDuration());
         }
     }
 
