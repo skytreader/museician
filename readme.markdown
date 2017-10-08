@@ -10,8 +10,11 @@ wordplay which I hope is much more obvious. \*wink\*\*wink\*.
 # App Compatibility
 
 This compiles to API 25: Android 7.1.1 (Nougat) and is tested to actually work
-on Google Pixel with Nougat. Caveat emptor, other handsets with Nougat may
-experience bugs.
+on Google Pixel with Android 8: Oreo. Caveat emptor, other handsets which differ
+in configuration may experience bugs.
+
+I welcome all and any [bug report](https://github.com/skytreader/museician/issues)
+but I can't promise they will be fixed if they are not reproducible from my side.
 
 # License
 
