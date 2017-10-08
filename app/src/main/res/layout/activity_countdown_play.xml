@@ -21,12 +21,14 @@
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"
         android:layout_below="@+id/statusScreen"/>
 
     <TextView
         android:id="@+id/nowPlaying"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14sp"
         android:layout_below="@+id/seekBar"/>
 
     <RelativeLayout
@@ -98,5 +100,6 @@
         android:layout_below="@+id/buttonBay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14sp"
         android:onClick="chooseJamSong"/>
 </RelativeLayout>
