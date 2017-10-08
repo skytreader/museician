@@ -51,42 +51,23 @@ public class CountdownPlayActivity extends Activity {
     private LRUPriorityQueue recentFiles;
     private boolean isCountdownOngoing = false;
 
-    private static Handler seekUpdateHandler = new Handler();
-    private UiUpdateRunnable uiUpdateRunner = new UiUpdateRunnable();
-
-    private class UiUpdateRunnable implements Runnable{
-
-        private boolean isRunning = true;
-
-        /**
-         * Call this on Activity pause so that the current runnable
-         * terminates itself out of existence.
-         */
-        public void stop(){
-            isRunning = false;
-        }
-
+    private Handler seekUpdateHandler = new Handler();
+    private Runnable uiUpdateRunner = new Runnable(){
         @Override
         public void run() {
-            Log.i(this.toString(), "Thread updating");
             seekBar.setMax(countdownPlayer.getMediaPlayer().getDuration());
             if(countdownPlayer.getMediaPlayer().isPlaying()) {
-                Log.d("callTrace", "approximately setting progress to " +
+                Log.d("seekbar", "approximately setting progress to " +
                         countdownPlayer.getMediaPlayer().getCurrentPosition());
                 seekBar.setProgress(countdownPlayer.getMediaPlayer().getCurrentPosition());
             }
             if(!isCountdownOngoing) {
-                statusUpdateElement.setText(countdownPlayer
-                        .getTimedownDisplay());
+                statusUpdateElement.setText(countdownPlayer.getTimedownDisplay());
+                deriveButtonState();
             }
-            if(isRunning || isCountdownOngoing) {
-                seekUpdateHandler.postDelayed(this, 100);
-            } else{
-                Log.d("termination", this + " is stopping now.");
-            }
-            deriveButtonState();
+            seekUpdateHandler.postDelayed(this, 100);
         }
-    }
+    };
 
     private class SeekbarMediaSeeker implements SeekBar.OnSeekBarChangeListener{
         @Override
@@ -117,7 +98,6 @@ public class CountdownPlayActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("callTrace", "CountdownPlayActivity.onCreate called");
         setContentView(R.layout.activity_countdown_play);
         Intent i = getIntent();
         String playFilePath = i.getStringExtra(HomeChooserActivity
@@ -156,12 +136,6 @@ public class CountdownPlayActivity extends Activity {
         }
 
         deriveButtonState();
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        uiUpdateRunner.stop();
     }
 
     // FIXME find a more idiomatic way of writing this.
@@ -217,10 +191,7 @@ public class CountdownPlayActivity extends Activity {
     private void setupSeekbar(){
         seekBar.setOnSeekBarChangeListener(new SeekbarMediaSeeker());
         MediaPlayer mp = countdownPlayer.getMediaPlayer();
-        Log.i("callTrace", "mp current position " + mp.getCurrentPosition());
         seekBar.setMax(mp.getDuration());
-        Log.i("callTrace", "max set to " + mp.getDuration());
-        Log.i("callTrace", "max set verification " + seekBar.getMax());
         seekBar.setProgress(mp.getCurrentPosition());
         seekUpdateHandler.postDelayed(uiUpdateRunner, 100);
     }
